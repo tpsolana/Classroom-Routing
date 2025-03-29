@@ -10,17 +10,63 @@
     <body>
         <h1>Bradley Classroom Routing</h1>
 
+        <div class="floorplan" id="testing">
+            
+        </div>
+
         <div class="inputs">
             <form>
                 <label for="starting">Starting Point:</label><br>
                 <input type="text" id="starting" name="starting"><br>
                 <label for="destination">Destination:</label><br>
                 <input type="text" id="destination" name="destination">
+                <input type="button" onclick="displayClassroom()" value="Enter">
               </form>
         </div>
 
-        <div class="floorplan">
+        <script>
+            // note: we probably will have to add each room number and coordinate manually unfortunately
+            const classrooms = new Map();
+            // room number (key), coordinates (value)
+            classrooms.set(150, {x: 73, y: 40});
+            classrooms.set(145, {x: 48, y: 45});
+            classrooms.set(122, {x: 8, y: 72});
+            classrooms.set(160, {x: 76, y: 78});
+
+
+            function displayClassroom(){
+                let startInput = document.getElementById("starting").value;
+                let destInput = parseInt(document.getElementById("destination").value);
+
+                // note: currently no way to delete starting node if submitted the first time
+                if(startInput != ""){
+                    startInput = parseInt(startInput);
+                    displayNodes(startInput, "startPoint", "start");
+                }
+
+                displayNodes(destInput, "destPoint", "destination");
+
+            }
+
+            function displayNodes(input, eleId, className){
+                if(classrooms.get(input) != undefined){
+                    let node = document.getElementById(eleId);
+                    // sets color
+                    node.className = className;
+                    // sets position of nodes
+                    node.style = "left: "+ classrooms.get(input).x +"%; " +
+                                 "bottom: "+ classrooms.get(input).y +"%";
+                }else{
+                    alert("Please enter a valid room number.");
+                }
+            }
+
+        </script>
+
+        <div class="floorplan" id="building map">
             <img src="images/bradley_hall1.jpg" alt="Bradley Hall First Floor Blueprint">
+            <span id="destPoint"></span>
+            <span id="startPoint"></span>
         </div>
     </body>
 </html>

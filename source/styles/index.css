@@ -48,10 +48,30 @@ input[type="text"]:focus {
     max-width: 900px;
     margin: auto;
     text-align: center;
+    position: relative;
 }
 
 .floorplan img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+    z-index: 0;
+}
+
+.destination {
+    position: absolute;
+    z-index: 1;
+    background-color: green;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+}
+
+.start {
+    position: absolute;
+    z-index: 2;
+    background-color: red;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
 }
