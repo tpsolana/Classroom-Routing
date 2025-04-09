@@ -2,8 +2,11 @@
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f5f5f5;
     color: #000000;
+    background-image: url("../images/bkgBradley.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -48,10 +51,70 @@ input[type="text"]:focus {
     max-width: 900px;
     margin: auto;
     text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .floorplan img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
+}
+
+.remove-btn{
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button-group{
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#add-destination {
+    background-color: #3498db;
+}
+
+#add-destination:hover {
+    background-color: #2980b9;
+}
+
+#reset {
+    background-color: #e74c3c;
+}
+
+#reset:hover {
+    background-color: #c0392b;
+}
+
+.remove-btn {
+    background-color: transparent;
+    color: #e74c3c;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 5px;
+    margin-left: 5px;
 }

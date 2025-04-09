@@ -12,14 +12,95 @@
 
         <div class="inputs">
             <form>
+
                 <label for="starting">Starting Point:</label><br>
-                <input type="text" id="starting" name="starting"><br>
-                <label for="destination">Destination:</label><br>
-                <input type="text" id="destination" name="destination">
-              </form>
+                <input type="text" id="starting" name="starting" placeholder="Enter your starting point: "><br>
+                
+                <div id="destinations-container">
+                    <div class="destination-group">
+                        <label for="destination-1">Destination 1:</label><br>
+                        <input type="text" id="destination-1" name="destination-1" class="destination-input" placeholder="Enter room number">
+                        <button type="button" class="remove-btn" onclick="removeDestination(this)">×</button>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" id="add-destination" onclick="addDestination()">+ Add Destination</button>
+                    <!-- Will not be functional until we figure out how to show the route-->
+                    <button type="button" id="show-route" onclick="displayClassroom()" value="Enter">Show Route</button>
+                    <button type="button" id="reset" onclick="resetRoute()">Reset</button>
+                </div>
+
+            </form>
         </div>
 
-        <div class="floorplan">
+        <script>
+            // note: we probably will have to add each room number and coordinate manually unfortunately
+            const classrooms = new Map();
+            // room number (key), coordinates (value)
+            classrooms.set(150, {x: 73, y: 40});
+            classrooms.set(145, {x: 48, y: 45});
+            classrooms.set(122, {x: 8, y: 72});
+            classrooms.set(160, {x: 76, y: 78});
+            classrooms.set(142, {x: 58, y: 20});
+            classrooms.set(146, {x: 68, y:20});
+
+            let destinationCount = 1;
+
+            function resetRoute(){
+
+            }
+
+            function addDestination(){
+                destinationCount++;
+                
+                const destinationGroup = document.createElement('div');
+                destinationGroup.className = 'destination-group';
+                
+                destinationGroup.innerHTML = `
+                    <label for="destination-${destinationCount}">Destination ${destinationCount}:</label><br>
+                    <input type="text" id="destination-${destinationCount}" name="destination-${destinationCount}" 
+                           class="destination-input" placeholder="Enter room number">
+                    <button type="button" class="remove-btn" onclick="removeDestination(this)">×</button>
+                `;
+                
+                document.getElementById('destinations-container').appendChild(destinationGroup);
+            }
+
+            function removeDestination(){
+                
+            }
+
+            function displayClassroom(){
+                let startInput = document.getElementById("starting").value;
+                let destInput = parseInt(document.getElementById("destination").value);
+
+                // note: currently no way to delete starting node if submitted the first time
+                if(startInput != ""){
+                    startInput = parseInt(startInput);
+                    displayNodes(startInput, "startPoint", "start");
+                }
+
+                displayNodes(destInput, "destPoint", "destination");
+
+            }
+
+            function displayNodes(input, eleId, className){
+                if(classrooms.get(input) != undefined){
+                    let node = document.getElementById(eleId);
+                    // sets color
+                    node.className = className;
+                    // sets position of nodes
+                    node.style = "left: "+ classrooms.get(input).x +"%; " +
+                                 "bottom: "+ classrooms.get(input).y +"%";
+                }else{
+                    alert("Please enter a valid room number.");
+                }
+            }
+
+        </script>
+
+        <div class="floorplan" id="building map">
             <img src="images/bradley_hall1.jpg" alt="Bradley Hall First Floor Blueprint">
         </div>
     </body>
