@@ -38,12 +38,18 @@
             // note: we probably will have to add each room number and coordinate manually unfortunately
             const classrooms = new Map();
             // room number (key), coordinates (value)
+
+            // floor 1
             classrooms.set(150, {x: 73, y: 40});
             classrooms.set(145, {x: 48, y: 45});
             classrooms.set(122, {x: 8, y: 72});
             classrooms.set(160, {x: 76, y: 78});
             classrooms.set(142, {x: 58, y: 20});
             classrooms.set(146, {x: 68, y:20});
+
+            // floor 2
+            classrooms.set(250, {x: 73, y: 40});
+            classrooms.set(222, {x: 8, y: 72});
 
             let destinationCount = 1;
 
@@ -86,20 +92,31 @@
             function removeDestination(destNum){
                 for(let i=destNum+1; i<=destinationCount; i++){
                     let tempTag = document.getElementById("destination-group-"+i);
+                    let tempVal = document.getElementById("destination-"+i).value;
                     tempTag.innerHTML = `
                     <label for="destination-${i-1}" id="label-${i-1}">Destination ${i-1}:</label><br>
                     <input type="text" id="destination-${i-1}" name="destination-${i-1}" 
-                           class="destination-input" placeholder="Enter room number">
+                           class="destination-input" value="${tempVal}">
                     <button type="button" class="remove-btn" onclick="removeDestination(${i-1})">×</button>
                 `;
                 
                 tempTag.id = "destination-group-"+(i-1);
+
+                tempTag = document.getElementById("destPoint-"+i);
+                tempTag.id = "destPoint-"+(i-1);
                 }
 
                 destinationCount--;
                 const removeTag = document.getElementById('destination-group-'+destNum);
-                console.log(removeTag);
                 removeTag.remove();
+
+                // split num
+                if (typeof destNum === 'string' && destNum.includes('-')) {
+                    destNum = destNum.split('-')[1];
+                }
+
+                const removeNode = document.getElementById('destPoint-'+destNum);
+                removeNode.remove();
             }
 
             /*
