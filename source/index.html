@@ -94,18 +94,12 @@
                 `;
                 
                 tempTag.id = "destination-group-"+(i-1);
-
-                    tempTag = document.getElementById("node-"+i);
-                    tempTag.id = "node-"+(i-1)
                 }
 
                 destinationCount--;
                 const removeTag = document.getElementById('destination-group-'+destNum);
                 console.log(removeTag);
                 removeTag.remove();
-
-                const removeNode = document.getElementById('node-'+destNum);
-                removeNode.remove();
             }
 
             /*
@@ -208,7 +202,7 @@
             <div class="map-container">
                 <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
                 <div id="node-container">
-                    <span id="node-1"></span>
+
                 </div>
             </div>
 
