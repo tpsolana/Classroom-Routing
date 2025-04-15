@@ -17,10 +17,10 @@
                 <input type="text" id="starting" name="starting" placeholder="Enter your starting point: "><br>
                 
                 <div id="destinations-container">
-                    <div class="destination-group">
+                    <div class="destination-group" id="destination-group-1">
                         <label for="destination-1">Destination 1:</label><br>
                         <input type="text" id="destination-1" name="destination-1" class="destination-input" placeholder="Enter room number">
-                        <button type="button" class="remove-btn" onclick="removeDestination(this)">×</button>
+                        <button type="button" class="remove-btn" onclick="removeDestination('destination-1')">×</button>
                     </div>
                 </div>
                 
@@ -48,27 +48,43 @@
             let destinationCount = 1;
 
             function resetRoute(){
-
+                let dest_container = document.getElementById("destinations-container");
+                dest_container.innerHTML = "";
+                destinationCount = 0;
+                addDestination();
             }
 
             function addDestination(){
+                // limit of 5
+                if(destinationCount >= 5){
+                    return;
+                }
+
                 destinationCount++;
                 
                 const destinationGroup = document.createElement('div');
                 destinationGroup.className = 'destination-group';
+                destinationGroup.id = 'destination-group-'+destinationCount;
                 
                 destinationGroup.innerHTML = `
                     <label for="destination-${destinationCount}">Destination ${destinationCount}:</label><br>
                     <input type="text" id="destination-${destinationCount}" name="destination-${destinationCount}" 
                            class="destination-input" placeholder="Enter room number">
-                    <button type="button" class="remove-btn" onclick="removeDestination(this)">×</button>
+                    <button type="button" class="remove-btn" onclick="removeDestination(${destinationCount})">×</button>
                 `;
                 
                 document.getElementById('destinations-container').appendChild(destinationGroup);
+
+                const newNode = document.createElement('div');
+                newNode.id = 'node-'+destinationCount;
+
+                document.getElementById('node-container').appendChild(newNode);
             }
 
-            function removeDestination(){
-                
+            function removeDestination(destNum){
+                destinationCount--;
+                const removeTag = document.getElementById('destination-group-'+destNum);
+                removeTag.remove();
             }
 
             function displayClassroom(){
@@ -98,10 +114,41 @@
                 }
             }
 
+            let floor = 1;
+
+            function downFloor(){
+                if(floor > 0){
+                    floor--;
+                    changeFloorLabel();
+                }
+            }
+
+            function upFloor(){
+                if(floor < 4){
+                    floor++;
+                    changeFloorLabel();
+                }
+            }
+
+            function changeFloorLabel(){
+                    let floorLabel = document.getElementById('floor-label');
+                    let map = document.getElementById('bradley-floor-map');
+                    map.src = "images/bradley_hall"+floor+".png";
+                    floorLabel.innerHTML = "Floor "+floor;
+            }
+
         </script>
 
         <div class="floorplan" id="building map">
-            <img src="images/bradley_hall1.jpg" alt="Bradley Hall First Floor Blueprint">
+            <span>
+                <button type="button" class="arrow-button" onclick="downFloor()"><</button>
+                <span id="floor-label">Floor 1</span>
+                <button type="button" class="arrow-button" onclick="upFloor()">></button>
+            </span>
+            <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
+            <div id="node-container">
+                <div id="node-1"></div>
+            </div>
         </div>
     </body>
 </html>
