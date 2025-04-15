@@ -170,4 +170,4 @@ function changeFloorLabel(){
 
         //clear nodes
         document.getElementById('node-container').innerHTML = "";
-            }
+}
