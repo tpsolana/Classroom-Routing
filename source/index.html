@@ -67,13 +67,25 @@
                 document.getElementById('destinations-container').appendChild(destinationGroup);
             }
 
-            function removeDestination(){
-                
+            function removeDestination(destNum){
+                // split num
+                if (typeof destNum === 'string' && destNum.includes('-')) {
+                    destNum = destNum.split('-')[1];
+                }
+
+                destinationCount--;
+                const removeTag = document.getElementById('destination-group-'+destNum);
+                removeTag.remove();
+
+                const removeNode = document.getElementById('node-'+destNum);
+                removeNode.remove();
             }
 
             function displayClassroom(){
+                document.getElementById('node-container').innerHTML = "";
+
                 let startInput = document.getElementById("starting").value;
-                let destInput = parseInt(document.getElementById("destination").value);
+                let destInput = parseInt(document.getElementById("destination-1").value);
 
                 // note: currently no way to delete starting node if submitted the first time
                 if(startInput != ""){
@@ -81,27 +93,82 @@
                     displayNodes(startInput, "startPoint", "start");
                 }
 
-                displayNodes(destInput, "destPoint", "destination");
+                for (let i = 1; i <= destinationCount; i++) {
+                    let destInput = document.getElementById("destination-" + i);
+                    if (destInput && destInput.value) {
+                        let roomNumber = parseInt(destInput.value);
+                        displayNodes(roomNumber, "destPoint-" + i, "destination");
+                    }
+                }
 
             }
 
             function displayNodes(input, eleId, className){
                 if(classrooms.get(input) != undefined){
                     let node = document.getElementById(eleId);
-                    // sets color
+                    
+                    if (!node) {
+                        node = document.createElement('div');
+                        node.id = eleId;
+                        document.getElementById('node-container').appendChild(node);
+                    }
+                        
+                    // Set class and position
                     node.className = className;
-                    // sets position of nodes
-                    node.style = "left: "+ classrooms.get(input).x +"%; " +
-                                 "bottom: "+ classrooms.get(input).y +"%";
-                }else{
+                    node.style.position = 'absolute'; 
+                    node.style.left = classrooms.get(input).x + "%";
+                    node.style.bottom = classrooms.get(input).y + "%";
+                        
+                    // Make it visible
+                    node.style.width = "15px";
+                    node.style.height = "15px";
+                    node.style.borderRadius = "50%"; 
+                    node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
+                } else {
                     alert("Please enter a valid room number.");
                 }
             }
 
+            let floor = 1;
+
+            function downFloor(){
+                if(floor > 0){
+                    floor--;
+                    changeFloorLabel();
+                }
+            }
+
+            function upFloor(){
+                if(floor < 4){
+                    floor++;
+                    changeFloorLabel();
+                }
+            }
+
+            function changeFloorLabel(){
+                    let floorLabel = document.getElementById('floor-label');
+                    let map = document.getElementById('bradley-floor-map');
+                    map.src = "images/bradley_hall"+floor+".png";
+                    floorLabel.innerHTML = "Floor "+floor;
+
+                    //clear nodes
+                    document.getElementById('node-container').innerHTML = "";
+            }
+
         </script>
 
-        <div class="floorplan" id="building map">
-            <img src="images/bradley_hall1.jpg" alt="Bradley Hall First Floor Blueprint">
+        <div class="floorplan" id="building-map">
+            <span>
+                <button type="button" class="arrow-button" onclick="downFloor()"><</button>
+                <span id="floor-label">Floor 1</span>
+                <button type="button" class="arrow-button" onclick="upFloor()">></button>
+            </span>
+            <div class="map-container">
+                <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
+                <div id="node-container">
+                    <div id="node-1"></div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
