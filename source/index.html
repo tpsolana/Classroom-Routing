@@ -50,6 +50,8 @@
             function resetRoute(){
                 let dest_container = document.getElementById("destinations-container");
                 dest_container.innerHTML = "";
+                let node_container = document.getElementById('node-container');
+                node_container.innerHTML = "";
                 destinationCount = 0;
                 addDestination();
             }
@@ -85,6 +87,9 @@
                 destinationCount--;
                 const removeTag = document.getElementById('destination-group-'+destNum);
                 removeTag.remove();
+
+                const removeNode = document.getElementById('node-'+destNum);
+                removeNode.remove();
             }
 
             function displayClassroom(){
