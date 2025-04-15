@@ -124,45 +124,49 @@
             }*/
 
             function displayClassroom(){
-                let startInput = document.getElementById("starting").value;
+                document.getElementById('node-container').innerHTML = "";
 
+                let startInput = document.getElementById("starting").value;
+                let destInput = parseInt(document.getElementById("destination-1").value);
+
+                // note: currently no way to delete starting node if submitted the first time
                 if(startInput != ""){
                     startInput = parseInt(startInput);
                     displayNodes(startInput, "startPoint", "start");
                 }
-                
-                /*
-                let destInput;
-                for(let i=1; i>=destinationCount; i++){
-                    destInput = parseInt(document.getElementById("destination-"+i).value);
-                    displayNodes(destInput, "node-"+i, "node");
+
+                for (let i = 1; i <= destinationCount; i++) {
+                    let destInput = document.getElementById("destination-" + i);
+                    if (destInput && destInput.value) {
+                        let roomNumber = parseInt(destInput.value);
+                        displayNodes(roomNumber, "destPoint-" + i, "destination");
+                    }
                 }
 
-                let destInput =  parseInt(document.getElementById("destination-1").value);
-                displayNodes(destInput, "node-1", "node");
-                
-                destInput =  parseInt(document.getElementById("destination-2").value);
-                displayNodes(destInput, "node-2", "node");
-                                
-                destInput =  parseInt(document.getElementById("destination-3").value);
-                displayNodes(destInput, "node-3", "node");
-                                
-                destInput =  parseInt(document.getElementById("destination-4").value);
-                displayNodes(destInput, "node-4", "node");
-                                
-                destInput =  parseInt(document.getElementById("destination-5").value);
-                displayNodes(destInput, "node-5", "node");*/
             }
 
             function displayNodes(input, eleId, className){
                 if(classrooms.get(input) != undefined){
                     let node = document.getElementById(eleId);
-                    // sets color
+                    
+                    if (!node) {
+                        node = document.createElement('div');
+                        node.id = eleId;
+                        document.getElementById('node-container').appendChild(node);
+                    }
+                        
+                    // Set class and position
                     node.className = className;
-                    // sets position of nodes
-                    node.style = "left: "+ classrooms.get(input).x +"%; " +
-                                 "bottom: "+ classrooms.get(input).y +"%";
-                }else{
+                    node.style.position = 'absolute'; 
+                    node.style.left = classrooms.get(input).x + "%";
+                    node.style.bottom = classrooms.get(input).y + "%";
+                        
+                    // Make it visible
+                    node.style.width = "15px";
+                    node.style.height = "15px";
+                    node.style.borderRadius = "50%"; 
+                    node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
+                } else {
                     alert("Please enter a valid room number.");
                 }
             }
@@ -188,6 +192,9 @@
                     let map = document.getElementById('bradley-floor-map');
                     map.src = "images/bradley_hall"+floor+".png";
                     floorLabel.innerHTML = "Floor "+floor;
+
+                    //clear nodes
+                    document.getElementById('node-container').innerHTML = "";
             }
 
         </script>
@@ -198,10 +205,13 @@
                 <span id="floor-label">Floor 1</span>
                 <button type="button" class="arrow-button" onclick="upFloor()">></button>
             </span>
-            <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
-            <div id="node-container">
-                <span id="node-1"></span>
+            <div class="map-container">
+                <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
+                <div id="node-container">
+                    <span id="node-1"></span>
+                </div>
             </div>
+
         </div>
     </body>
 </html>

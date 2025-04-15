@@ -129,11 +129,23 @@ button:hover {
     cursor: pointer;
 }
 
-.node {
+.map-container {
+    position: relative;
+    width: 100%;
+}
+
+#node-container {
     position: absolute;
-    z-index: 1;
-    background-color: red;
-    border-radius: 50%;
-    height: 15px;
-    width: 15px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.start, .destination {
+    border: 3px solid white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 20;
 }
