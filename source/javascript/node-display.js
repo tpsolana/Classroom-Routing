@@ -2,7 +2,14 @@
 const classrooms = new Map();
 // room number (key), coordinates (value)
 
+// floor 0
+classrooms.set(25, {x: 22, y: 40});
+classrooms.set(50, {x: 73, y: 40});
+classrooms.set(46, {x: 62, y:20});
+classrooms.set(48, {x: 70, y:20});
+
 // floor 1
+classrooms.set(125, {x: 22, y: 40});
 classrooms.set(150, {x: 73, y: 40});
 classrooms.set(145, {x: 48, y: 45});
 classrooms.set(122, {x: 8, y: 72});
@@ -14,6 +21,11 @@ classrooms.set(146, {x: 68, y:20});
 classrooms.set(250, {x: 73, y: 40});
 classrooms.set(222, {x: 8, y: 72});
 classrooms.set(225, {x: 22, y: 40});
+
+// floor 3
+classrooms.set(322, {x: 8, y: 72});
+
+// floor 4
 
 let destinationCount = 1;
 
@@ -119,13 +131,13 @@ function displayNodes(roomNumber, eleId, className){
             document.getElementById('node-container').appendChild(node);
         }
         
+        // store room number in tag (probabably not best practice but works for now)
+        node.alt = roomNumber
+
         // hide if not proper floor
-        if(!(floor*100 <= roomNumber && (floor+1)*100 >= roomNumber)){
+        if(!checkFloor(node)){
             node.hidden = true;
         }
-
-        // store room number in tag
-        node.alt = roomNumber
 
         // Set class and position
         node.className = className;
@@ -140,6 +152,10 @@ function displayNodes(roomNumber, eleId, className){
         node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
 
     }
+}
+
+function checkFloor(node){
+    return floor*100 <= node.alt && (floor+1)*100 >= node.alt;
 }
 
 let floor = 1;
@@ -171,7 +187,7 @@ function changeFloorLabel(){
         for (let i = 1; i <= destinationCount; i++) {
             let node = document.getElementById("destPoint-"+i);
 
-            if(floor*100 <= node.alt && (floor+1)*100 >= node.alt){
+            if(checkFloor(node)){
                 node.hidden = false;
             }else{
                 node.hidden = true;
