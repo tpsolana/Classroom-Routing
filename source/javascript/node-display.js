@@ -13,14 +13,13 @@ classrooms.set(146, {x: 68, y:20});
 // floor 2
 classrooms.set(250, {x: 73, y: 40});
 classrooms.set(222, {x: 8, y: 72});
+classrooms.set(225, {x: 22, y: 40});
 
 let destinationCount = 1;
 
 function resetRoute(){
-    let dest_container = document.getElementById("destinations-container");
-    dest_container.innerHTML = "";
-    let node_container = document.getElementById('node-container');
-    node_container.innerHTML = "";
+    document.getElementById("destinations-container").innerHTML = "";
+    document.getElementById('node-container').innerHTML = "";
     destinationCount = 0;
     addDestination();
 }
@@ -83,28 +82,11 @@ function removeDestination(destNum){
 
 }
 
-/*
-function displayClassroom(){
-    let startInput = document.getElementById("starting").value;
-    let destInput = parseInt(document.getElementById("destination").value);
-
-    // note: currently no way to delete starting node if submitted the first time
-    if(startInput != ""){
-        startInput = parseInt(startInput);
-        displayNodes(startInput, "startPoint", "start");
-    }
-
-    displayNodes(destInput, "destPoint", "destination");
-
-}*/
-
 function displayClassroom(){
     document.getElementById('node-container').innerHTML = "";
 
     let startInput = document.getElementById("starting").value;
-    let destInput = parseInt(document.getElementById("destination-1").value);
 
-    // note: currently no way to delete starting node if submitted the first time
     if(startInput != ""){
         startInput = parseInt(startInput);
         displayNodes(startInput, "startPoint", "start");
@@ -114,14 +96,21 @@ function displayClassroom(){
         let destInput = document.getElementById("destination-" + i);
         if (destInput && destInput.value) {
             let roomNumber = parseInt(destInput.value);
+            
+            if(classrooms.get(roomNumber) == undefined){
+                document.getElementById('node-container').innerHTML = "";
+                alert("Please enter a valid room number.");
+                break;
+            }
+
             displayNodes(roomNumber, "destPoint-" + i, "destination");
         }
     }
 
 }
 
-function displayNodes(input, eleId, className){
-    if(classrooms.get(input) != undefined){
+function displayNodes(roomNumber, eleId, className){
+    if(classrooms.get(roomNumber) != undefined){
         let node = document.getElementById(eleId);
         
         if (!node) {
@@ -129,20 +118,27 @@ function displayNodes(input, eleId, className){
             node.id = eleId;
             document.getElementById('node-container').appendChild(node);
         }
-            
+        
+        // hide if not proper floor
+        if(!(floor*100 <= roomNumber && (floor+1)*100 >= roomNumber)){
+            node.hidden = true;
+        }
+
+        // store room number in tag
+        node.alt = roomNumber
+
         // Set class and position
         node.className = className;
         node.style.position = 'absolute'; 
-        node.style.left = classrooms.get(input).x + "%";
-        node.style.bottom = classrooms.get(input).y + "%";
+        node.style.left = classrooms.get(roomNumber).x + "%";
+        node.style.bottom = classrooms.get(roomNumber).y + "%";
             
         // Make it visible
         node.style.width = "15px";
         node.style.height = "15px";
         node.style.borderRadius = "50%"; 
         node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
-    } else {
-        alert("Please enter a valid room number.");
+
     }
 }
 
@@ -169,5 +165,16 @@ function changeFloorLabel(){
         floorLabel.innerHTML = "Floor "+floor;
 
         //clear nodes
-        document.getElementById('node-container').innerHTML = "";
+        //document.getElementById('node-container').innerHTML = "";
+
+        // hides the displays proper nodes based on floor
+        for (let i = 1; i <= destinationCount; i++) {
+            let node = document.getElementById("destPoint-"+i);
+
+            if(floor*100 <= node.alt && (floor+1)*100 >= node.alt){
+                node.hidden = false;
+            }else{
+                node.hidden = true;
+            }
+        }
 }
