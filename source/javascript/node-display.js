@@ -27,6 +27,40 @@ classrooms.set(322, {x: 8, y: 72});
 
 // floor 4
 
+// bathrooms
+const bathrooms = [ 27, 53,
+                    129, 131, 153, 155,
+                    229, 231, 253, 255,
+                    337, 357,
+                    427, 429, 433
+                    ];
+// floor 0
+classrooms.set(27, {x: 34, y: 42, gender: "F"});
+classrooms.set(53, {x: 61, y: 42, gender: "M"});
+
+// floor 1
+classrooms.set(153, {x: 61, y: 42, gender: "F"});
+classrooms.set(155, {x: 61, y: 55, gender: "M"});
+
+classrooms.set(129, {x: 35, y: 42, gender: "F"});
+classrooms.set(131, {x: 35, y: 55, gender: "M"});
+
+// floor 2
+classrooms.set(253, {x: 61, y: 42, gender: "F"});
+classrooms.set(255, {x: 61, y: 55, gender: "M"});
+
+classrooms.set(229, {x: 35, y: 42, gender: "F"});
+classrooms.set(231, {x: 35, y: 55, gender: "M"});
+
+// floor 3
+classrooms.set(337, {x: 34, y: 42, gender: "F"});
+classrooms.set(357, {x: 61, y: 42, gender: "M"});
+
+// floor 4
+classrooms.set(427, {x: 32, y: 32, gender: "F"});
+classrooms.set(429, {x: 32, y: 36, gender: "F"});
+classrooms.set(433, {x: 36, y: 32, gender: "M"});
+
 let destinationCount = 1;
 
 function resetRoute(){
@@ -155,8 +189,32 @@ function displayNodes(roomNumber, eleId, className){
         node.style.width = "15px";
         node.style.height = "15px";
         node.style.borderRadius = "50%"; 
-        node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
+        //node.style.backgroundColor = className === "start" ? "#27ae60" : "#e74c3c"; 
 
+        switch(className){
+            case "start":
+                node.style.backgroundColor = "#27ae60";
+                break;
+            
+            case "destination":
+                node.style.backgroundColor = "#e74c3c";
+                break;
+            
+            case "bathroomF":
+                node.style.backgroundColor = "#db05c6";
+                break;
+            
+            case "bathroomM":
+                node.style.backgroundColor = "#1d41b0";
+                break;
+        }
+
+    }
+}
+
+function displayBathrooms(){
+    for(let i=0; i<bathrooms.length; i++){
+        displayNodes(bathrooms[i], "BR"+bathrooms[i], "bathroom"+classrooms.get(bathrooms[i]).gender);
     }
 }
 
@@ -193,10 +251,29 @@ function changeFloorLabel(){
         for (let i = 1; i <= destinationCount; i++) {
             let node = document.getElementById("destPoint-"+i);
 
-            if(checkFloor(node)){
-                node.hidden = false;
+            if(node){
+                if(checkFloor(node)){
+                    node.hidden = false;
+                }else{
+                    node.hidden = true;
+                }
             }else{
-                node.hidden = true;
+                break;
             }
         }
+
+        for(let i=0; i<bathrooms.length; i++){
+            let bathroom = document.getElementById("BR"+bathrooms[i]);
+            
+            if(bathroom){
+                if(checkFloor(bathroom)){
+                    bathroom.hidden = false;
+                }else{
+                    bathroom.hidden = true;
+                }
+            }else{
+                break;
+            }
+        }
+
 }
