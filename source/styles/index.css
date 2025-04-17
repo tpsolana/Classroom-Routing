@@ -144,7 +144,7 @@ button:hover {
     z-index: 10;
 }
 
-.start, .destination, .bathroomM, .bathroomF {
+.destination, .bathroomM, .bathroomF {
     border: 3px solid white;
     color: white;
     font-weight: bold;
@@ -152,3 +152,42 @@ button:hover {
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
     z-index: 20;
 }
+
+/*  copied some code that can turn divs into a star
+    make sure that width, height, and borderRadius
+    are set to zero in the displayNodes() function
+*/
+.start {
+    position: relative;
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid #1c003B;
+    border-left: 10px solid transparent;
+    transform: rotate(35deg);
+  }
+  .start:before {
+    border-bottom: 8px solid #1c003B;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -4.5px;
+    left: -6.5px;
+    content: '';
+    transform: rotate(-35deg);
+  }
+  .start:after {
+    position: absolute;
+    top: 0px;
+    left: -10.5px;
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-bottom: 7px solid #1c003B;
+    border-left: 10px solid transparent;
+    transform: rotate(-70deg);
+    content: '';
+  }
+  

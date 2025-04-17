@@ -135,6 +135,11 @@ function removeDestination(destNum){
         removeNode.remove();
     }
 
+    if(step > destinationCount){
+        step = destinationCount;
+        changeStep();
+    }
+
 }
 
 function displayClassroom(){
@@ -161,6 +166,7 @@ function displayClassroom(){
         }
     }
 
+    changeStep();
 }
 
 function displayNodes(roomNumber, eleId, className){
@@ -191,7 +197,7 @@ function displayNodes(roomNumber, eleId, className){
         node.style.position = 'absolute'; 
         node.style.left = classrooms.get(roomNumber).x + "%";
         node.style.bottom = classrooms.get(roomNumber).y + "%";
-            
+        
         // Make it visible
         node.style.width = "15px";
         node.style.height = "15px";
@@ -200,7 +206,10 @@ function displayNodes(roomNumber, eleId, className){
 
         switch(className){
             case "start":
-                node.style.backgroundColor = "#1c003a";
+                // node.style.backgroundColor = "#1c003a";
+                node.style.width = "0px";
+                node.style.height = "0px";
+                node.style.borderRadius = "0px"
                 break;
             
             case "destination":
@@ -269,6 +278,7 @@ function downFloor(){
     if(floor > 0){
         floor--;
         changeFloorLabel();
+        switchNodeDisplay();
     }
 }
 
@@ -276,48 +286,104 @@ function upFloor(){
     if(floor < 4){
         floor++;
         changeFloorLabel();
+        switchNodeDisplay();
     }
 }
 
+let step = 1;
+
+function upStep(){
+    if(step < destinationCount){
+        step++;
+        changeStep();
+    }
+}
+
+function downStep(){
+    if(step > 1){
+        step--;
+        changeStep();
+    }
+}
+
+function changeStep(){
+    let node = document.getElementById("destPoint-"+step);
+    floor = parseInt(node.alt/100);
+    changeFloorLabel();
+    switchNodeDisplay();
+}
+
+let stepMode = false;
+
+function stepModeSwitch(){
+    if(!stepMode && step < 1){
+        alert("Please enter a destination.");
+        return;
+    }
+
+    let stepModeButton = document.getElementById("step-mode-switch");
+    let arrowButtons = document.getElementsByClassName("arrow-button");
+
+    if(stepMode){
+        stepModeButton.innerHTML = "Navigate by Floors";
+        arrowButtons[0].setAttribute("onclick", "downFloor()");
+        arrowButtons[1].setAttribute("onclick", "upFloor()");
+        stepMode = false;
+    }else{
+        stepModeButton.innerHTML = "Navigate by Steps";
+        arrowButtons[0].setAttribute("onclick", "downStep()");
+        arrowButtons[1].setAttribute("onclick", "upStep()");
+        stepMode = true;
+    }
+
+    changeFloorLabel();
+}
+
 function changeFloorLabel(){
-        let floorLabel = document.getElementById('floor-label');
-        let map = document.getElementById('bradley-floor-map');
-        map.src = "images/bradley_hall"+floor+".png";
+    let floorLabel = document.getElementById('floor-label');
+    let map = document.getElementById('bradley-floor-map');
+    map.src = "images/bradley_hall"+floor+".png";
+
+    if(!stepMode){
         floorLabel.innerHTML = "Floor "+floor;
+    }else{
+        floorLabel.innerHTML = "Step "+step;
+    }
+}
 
-        //clear nodes
-        //document.getElementById('node-container').innerHTML = "";
-        
-        // hides the displays proper nodes based on floor
-        for (let i = 0; i <= destinationCount; i++) {
-            let node = i == 0 ? document.getElementById("startPoint"):
-                                document.getElementById("destPoint-"+i);
+function switchNodeDisplay(){
+    //clear nodes
+    //document.getElementById('node-container').innerHTML = "";
+    
+    // hides the displays proper nodes based on floor
+    for (let i = 0; i <= destinationCount; i++) {
+        let node = i == 0 ? document.getElementById("startPoint"):
+                            document.getElementById("destPoint-"+i);
 
-            if(node){
-                if(checkFloor(node)){
-                    node.hidden = false;
-                }else{
-                    node.hidden = true;
-                }
+        if(node){
+            if(checkFloor(node)){
+                node.hidden = false;
             }else{
-                break;
+                node.hidden = true;
             }
-
+        }else if(i > 0){
+            break;
         }
 
-        for(let i=0; i<bathrooms.length; i++){
-            let bathroom = document.getElementById("BR"+bathrooms[i]);
+    }
 
-            if(bathroom){
-                if(checkFloor(bathroom)){
-                    bathroom.hidden = false;
-                }else{
-                    bathroom.hidden = true;
-                }
+    for(let i=0; i<bathrooms.length; i++){
+        let bathroom = document.getElementById("BR"+bathrooms[i]);
+
+        if(bathroom){
+            if(checkFloor(bathroom)){
+                bathroom.hidden = false;
             }else{
-                break;
+                bathroom.hidden = true;
             }
-
+        }else if(i > 0){
+            break;
         }
 
+    }
 }
