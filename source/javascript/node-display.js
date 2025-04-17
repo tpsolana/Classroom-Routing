@@ -74,6 +74,7 @@ function removeDestination(destNum){
     tempTag = document.getElementById("destPoint-"+i);
     if(tempTag != null){
         tempTag.id = "destPoint-"+(i-1);
+        tempTag.innerHTML = i-1;
     }
 
     }
