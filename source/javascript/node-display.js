@@ -9,7 +9,10 @@ classrooms.set(46, {x: 62, y:20});
 classrooms.set(48, {x: 70, y:20});
 
 // floor 1
-classrooms.set(125, {x: 22, y: 40});
+classrooms.set("front", {x: 49, y: 15});
+classrooms.set("front-left", {x: 22, y: 15});
+classrooms.set("front-right", {x: 76, y: 15});
+classrooms.set(125, {x: 21, y: 40});
 classrooms.set(150, {x: 73, y: 40});
 classrooms.set(145, {x: 48, y: 45});
 classrooms.set(122, {x: 8, y: 72});
@@ -24,6 +27,8 @@ classrooms.set(225, {x: 22, y: 40});
 
 // floor 3
 classrooms.set(322, {x: 8, y: 72});
+classrooms.set(340, {x: 48, y: 20});
+
 
 // floor 4
 
@@ -68,6 +73,9 @@ function resetRoute(){
     document.getElementById('node-container').innerHTML = "";
     destinationCount = 0;
     addDestination();
+
+    bathroomShown = false;
+    document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
 }
 
 function addDestination(){
@@ -135,7 +143,6 @@ function displayClassroom(){
     let startInput = document.getElementById("starting").value;
 
     if(startInput != ""){
-        startInput = parseInt(startInput);
         displayNodes(startInput, "startPoint", "start");
     }
 
@@ -212,13 +219,46 @@ function displayNodes(roomNumber, eleId, className){
     }
 }
 
+let bathroomShown = false;
+
 function displayBathrooms(){
-    for(let i=0; i<bathrooms.length; i++){
-        displayNodes(bathrooms[i], "BR"+bathrooms[i], "bathroom"+classrooms.get(bathrooms[i]).gender);
+    if(!bathroomShown){
+        for(let i=0; i<bathrooms.length; i++){
+            displayNodes(bathrooms[i], "BR"+bathrooms[i], "bathroom"+classrooms.get(bathrooms[i]).gender);
+        }
+        
+        document.getElementById("show-bathrooms").innerHTML = "Hide Bathrooms";
+
+        bathroomShown = true;
+    }else{
+        for(let i=0; i<bathrooms.length; i++){
+            let bathroom = document.getElementById("BR"+bathrooms[i]);
+
+            if(bathroom){
+                bathroom.remove();
+            }else{
+                break;
+            }
+
+        }
+
+        document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
+
+        bathroomShown = false;
     }
+
 }
 
 function checkFloor(node){
+    let string = node.alt;
+
+    if (typeof node.alt === 'string' && node.alt.includes('-')) {
+        string = node.alt.split('-')[0];
+    }
+
+    if(string == "front" && floor == 1){
+        return true;
+    }
     return floor*100 <= node.alt && (floor+1)*100 >= node.alt;
 }
 
@@ -260,11 +300,12 @@ function changeFloorLabel(){
             }else{
                 break;
             }
+
         }
 
         for(let i=0; i<bathrooms.length; i++){
             let bathroom = document.getElementById("BR"+bathrooms[i]);
-            
+
             if(bathroom){
                 if(checkFloor(bathroom)){
                     bathroom.hidden = false;
@@ -274,6 +315,7 @@ function changeFloorLabel(){
             }else{
                 break;
             }
+
         }
 
 }
