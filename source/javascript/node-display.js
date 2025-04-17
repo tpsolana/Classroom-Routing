@@ -12,6 +12,7 @@ classrooms.set(48, {x: 70, y:20});
 classrooms.set("front", {x: 49, y: 15});
 classrooms.set("front-left", {x: 22, y: 15});
 classrooms.set("front-right", {x: 76, y: 15});
+
 classrooms.set(125, {x: 21, y: 40});
 classrooms.set(150, {x: 73, y: 40});
 classrooms.set(145, {x: 48, y: 45});
@@ -63,7 +64,7 @@ classrooms.set(357, {x: 61, y: 42, gender: "M"});
 
 // floor 4
 classrooms.set(427, {x: 32, y: 32, gender: "F"});
-classrooms.set(429, {x: 32, y: 36, gender: "F"});
+classrooms.set(429, {x: 32, y: 38, gender: "F"});
 classrooms.set(433, {x: 36, y: 32, gender: "M"});
 
 let destinationCount = 1;
@@ -259,6 +260,7 @@ function checkFloor(node){
     if(string == "front" && floor == 1){
         return true;
     }
+    
     return floor*100 <= node.alt && (floor+1)*100 >= node.alt;
 }
 
@@ -286,10 +288,11 @@ function changeFloorLabel(){
 
         //clear nodes
         //document.getElementById('node-container').innerHTML = "";
-
+        
         // hides the displays proper nodes based on floor
-        for (let i = 1; i <= destinationCount; i++) {
-            let node = document.getElementById("destPoint-"+i);
+        for (let i = 0; i <= destinationCount; i++) {
+            let node = i == 0 ? document.getElementById("startPoint"):
+                                document.getElementById("destPoint-"+i);
 
             if(node){
                 if(checkFloor(node)){
