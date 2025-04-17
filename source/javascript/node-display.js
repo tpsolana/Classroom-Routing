@@ -139,6 +139,11 @@ function displayNodes(roomNumber, eleId, className){
             node.hidden = true;
         }
 
+        // display number on node
+        if (typeof eleId === 'string' && eleId.includes('-')) {
+            node.innerHTML = eleId.split('-')[1];
+        }
+
         // Set class and position
         node.className = className;
         node.style.position = 'absolute'; 
