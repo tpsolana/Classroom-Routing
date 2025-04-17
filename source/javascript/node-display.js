@@ -38,8 +38,7 @@ const bathrooms = [ 27, 53,
                     129, 131, 153, 155,
                     229, 231, 253, 255,
                     337, 357,
-                    427, 429, 433
-                    ];
+                    427, 429, 433 ];
 // floor 0
 classrooms.set(27, {x: 34, y: 42, gender: "F"});
 classrooms.set(53, {x: 61, y: 42, gender: "M"});
@@ -201,7 +200,7 @@ function displayNodes(roomNumber, eleId, className){
 
         switch(className){
             case "start":
-                node.style.backgroundColor = "#27ae60";
+                node.style.backgroundColor = "#1c003a";
                 break;
             
             case "destination":
