@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Floorplan Routing</title>
-</head>
-<body>
-    <h1>Path Finder</h1>
-    <input id="start" placeholder="Start room" />
-    <input id="end" placeholder="End room" />
-    <button onclick="findPath()">Find Path</button>
-    <p id="result"></p>
-
-    <script>
-        async function findPath() {
-            const start = document.getElementById("start").value;
-            const end = document.getElementById("end").value;
-
-            const res = await fetch("/find-path", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ start, end })
-            });
-
-            const data = await res.json();
-            document.getElementById("result").innerText = `Path: ${data.path}, Distance: ${data.distance}`;
-        }
-    </script>
-</body>
+    <head>
+        <title>Bradley Classroom Routing</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    </head>
+    <body>
+        <h1>Bradley Classroom Routing</h1>
+        <div class="inputs">
+            <form>
+                <label for="starting">Starting Point:</label><br>
+                <select id="starting" name="starting">
+                    <option value="none">None</option>
+                    <option value="front">Front</option>
+                    <option value="front-left">Front Left</option>
+                    <option value="front-right">Front Right</option>
+                </select>
+                
+                <div id="destinations-container">
+                    <div class="destination-group" id="destination-group-1">
+                        <label for="destination-1" id="label-1">Destination 1:</label><br>
+                        <input type="text" id="destination-1" name="destination-1" class="destination-input" placeholder="Enter room number">
+                        <button type="button" class="remove-btn" onclick="removeDestination(1)">×</button>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" id="add-destination" onclick="addDestination()">+ Add Destination</button>
+                    <button type="button" id="show-route" onclick="displayClassroom()">Show Route</button>
+                    <button type="button" id="show-bathrooms" onclick="displayBathrooms()">Show Bathrooms</button>
+                    <button type="button" id="reset" onclick="resetRoute()">Reset</button>
+                </div>
+            </form>
+        </div>
+        <div class="floorplan" id="building map">
+            <span>
+                <button type="button" class="arrow-button" onclick="downFloor()"><</button>
+                <span id="floor-label">Floor 1</span>
+                <button type="button" class="arrow-button" onclick="upFloor()">></button>
+            </span>
+            <button id="step-mode-switch" style="float: right;" onclick="stepModeSwitch()">Navigate by Steps</button>
+            <div class="map-container">
+                <img src="{{ url_for('static', filename='images/bradley_hall1.png') }}" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
+                <div id="node-container">
+                </div>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='js/node-display.js') }}"></script>
+    </body>
 </html>
