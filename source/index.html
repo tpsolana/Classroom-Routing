@@ -48,16 +48,46 @@
                 <button type="button" class="arrow-button" onclick="upFloor()">></button>
             </span>
             <button id="step-mode-switch" style="float: right;" onclick="stepModeSwitch()">Navigate by Steps</button>
-            <div class="map-container">
+            <canvas class="map-container" id="map-container">
                 <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
                 <div id="node-container">
 
                 </div>
-            </div>
+            </canvas>
 
         </div>
 
         <script src="javascript/node-display.js"></script>
+
+        <!--    testing out finding coordinates by click
+                not accurate right now  -->
+        <script>
+            let map = document.getElementById("map-container");
+            map.addEventListener("click", getCoord);
+            let offsets = map.getBoundingClientRect();
+            
+            function getCoord(e){
+                console.log(offsets);
+                console.log((e.clientX-offsets.left)+", "+(e.clientY-offsets.top));
+            }
+
+            const canvas = document.getElementById("map-container");
+            const ctx = canvas.getContext("2d");
+            const img = document.getElementById("bradley-floor-map");
+
+            img.onload = draw;
+
+            // crashes when page is flipped too many times
+            function draw(){
+                let scale = window.devicePixelRatio;
+
+                canvas.width = Math.floor(canvas.width * scale);
+                canvas.height = Math.floor(canvas.height * scale);
+                
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+
+        </script>
         
     </body>
 </html>

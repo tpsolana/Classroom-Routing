@@ -329,14 +329,17 @@ function stepModeSwitch(){
         arrowButtons[0].setAttribute("onclick", "downFloor()");
         arrowButtons[1].setAttribute("onclick", "upFloor()");
         stepMode = false;
+        changeFloorLabel();
     }else{
         stepModeButton.innerHTML = "Navigate by Steps";
         arrowButtons[0].setAttribute("onclick", "downStep()");
         arrowButtons[1].setAttribute("onclick", "upStep()");
         stepMode = true;
-    }
 
-    changeFloorLabel();
+        // resets to and displays step 1
+        step = 1;
+        changeStep();
+    }
 }
 
 function changeFloorLabel(){
