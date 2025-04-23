@@ -330,9 +330,12 @@ function downStep(){
 
 function changeStep(){
     let node = document.getElementById("destPoint-"+step);
-    floor = parseInt(node.alt/100);
-    changeFloorLabel();
-    switchNodeDisplay();
+    
+    if(node){
+        floor = parseInt(node.alt/100);
+        changeFloorLabel();
+        switchNodeDisplay();
+    }
 }
 
 let stepMode = false;
