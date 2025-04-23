@@ -71,22 +71,6 @@
                 console.log((e.clientX-offsets.left)+", "+(e.clientY-offsets.top));
             }
 
-            const canvas = document.getElementById("map-container");
-            const ctx = canvas.getContext("2d");
-            const img = document.getElementById("bradley-floor-map");
-
-            img.onload = draw;
-
-            // crashes when page is flipped too many times
-            function draw(){
-                let scale = window.devicePixelRatio;
-
-                canvas.width = Math.floor(canvas.width * scale);
-                canvas.height = Math.floor(canvas.height * scale);
-                
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            }
-
         </script>
         
     </body>

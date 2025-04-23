@@ -66,6 +66,28 @@ classrooms.set(427, {x: 32, y: 32, gender: "F"});
 classrooms.set(429, {x: 32, y: 38, gender: "F"});
 classrooms.set(433, {x: 36, y: 32, gender: "M"});
 
+const canvas = document.getElementById("map-container");
+const ctx = canvas.getContext("2d");
+const img = document.getElementById("bradley-floor-map");
+
+window.onload = setUp;
+
+// set image to proper size scaling
+function setUp(){
+    let scale = window.devicePixelRatio * 3;
+
+    canvas.width = Math.floor(canvas.width * scale);
+    canvas.height = Math.floor(canvas.height * scale);
+
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+}
+
+img.onload = draw;
+
+function draw(){                
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+}
+
 let destinationCount = 1;
 
 function resetRoute(){
