@@ -64,11 +64,14 @@
         <script>
             let map = document.getElementById("map-container");
             map.addEventListener("click", getCoord);
-            let offsets = map.getBoundingClientRect();
             
             function getCoord(e){
+                let offsets = map.getBoundingClientRect();
+                let x = Math.round(((e.clientX - offsets.left)/offsets.width)*100);
+                let y = Math.round(((e.clientY - offsets.top)/offsets.height)*100);
+
                 console.log(offsets);
-                console.log((e.clientX-offsets.left)+", "+(e.clientY-offsets.top));
+                console.log(x+", "+y);
             }
 
         </script>
