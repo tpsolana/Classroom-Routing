@@ -80,6 +80,20 @@ function setUp(){
     canvas.height = Math.floor(canvas.height * scale);
 
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    console.log(classrooms.size);
+
+    // inserts all of the room number data into the data list for auto fill
+    let classroomIt = classrooms.keys();
+    let datalist = document.getElementById("room-data");
+
+    for(let i=0; i<classrooms.size; i++){
+        let option = document.createElement("option");
+        datalist.appendChild(option);
+
+        option.value = classroomIt.next().value;
+        console.log(option.value);
+    }
 }
 
 img.onload = draw;
@@ -115,7 +129,7 @@ function addDestination(){
     destinationGroup.innerHTML = `
         <label for="destination-${destinationCount}" id="label-${destinationCount}">Destination ${destinationCount}:</label><br>
         <input type="text" id="destination-${destinationCount}" name="destination-${destinationCount}" 
-                class="destination-input" placeholder="Enter room number">
+                class="destination-input" placeholder="Enter room number" list="room-data">
         <button type="button" class="remove-btn" onclick="removeDestination(${destinationCount})">×</button>
     `;
     
