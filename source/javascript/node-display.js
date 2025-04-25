@@ -72,16 +72,14 @@ const img = document.getElementById("bradley-floor-map");
 
 window.onload = setUp;
 
-// set image to proper size scaling
 function setUp(){
+    // set image to proper size scaling
     let scale = window.devicePixelRatio * 3;
 
     canvas.width = Math.floor(canvas.width * scale);
     canvas.height = Math.floor(canvas.height * scale);
 
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-    console.log(classrooms.size);
 
     // inserts all of the room number data into the data list for auto fill
     let classroomIt = classrooms.keys();
@@ -92,7 +90,6 @@ function setUp(){
         datalist.appendChild(option);
 
         option.value = classroomIt.next().value;
-        console.log(option.value);
     }
 }
 
