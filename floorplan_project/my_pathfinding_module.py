@@ -115,3 +115,5 @@ def dijkstra(graph, start_base, end_base):
                 heapq.heappush(priority_queue, (distance, neighbor, raw_path + [neighbor]))
 
     return None, float('inf')
+
+//make function for elevator/stairs preferences 

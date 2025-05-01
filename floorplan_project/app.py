@@ -28,21 +28,12 @@ from my_floorplans import BR0_floorplan  # Assuming your floorplan is in my_floo
 
 app = Flask(__name__)
 
-# Basic route to test
-@app.route('/')
-def home():
-    return f"Hello, this is a test! Here's your floorplan data: {BR0_floorplan}"
+app.route("/find-path", methods=["POST"])
+def find_path():
+   #start = data["start"]
+   end = data["end"]
+   path, distance = dijkstra(graph, start, end)
+    return jsonify({"path": path, "distance": distance})
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
-
-
-#@app.route("/find-path", methods=["POST"])
-#def find_path():
-   ##start = data["start"]
-   #end = data["end"]
-   # path, distance = dijkstra(graph, start, end)
-    #return jsonify({"path": path, "distance": distance})
-
-#if __name__ == "__main__":
-    #app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
