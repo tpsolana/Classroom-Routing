@@ -167,7 +167,7 @@ BR0_floorplan = {
     "BR074_front": {},
     "BR056_front": {},
     "Rmens_front": {},
-    "Lwomens_front": {},
+    "Lwomens_front": {}
 }
 
 BR1_floorplan = {
@@ -391,7 +391,7 @@ BR2_floorplan = {
     "BR287": {},
     "BR289": {},
     "BR291": {},
-    "BR295": {}
+    "BR295": {},
 
     #Intersections
     "intersec0": {},
@@ -551,7 +551,7 @@ BR3_floorplan = {
     "BR395": {},
     "BR397": {},
     "Lwomens": {},
-    "Rmens": {}
+    "Rmens": {},
 
     #Intersections
     "intersec0": {},
@@ -697,7 +697,7 @@ BR4_floorplan= {
     "BR460": {},
     "BR458": {},
     "BR467": {},
-    "BR469": {}
+    "BR469": {},
 
     #Intersections
     "intersec0": {},

@@ -1,5 +1,6 @@
 // note: we probably will have to add each room number and coordinate manually unfortunately
 const classrooms = new Map();
+
 // room number (key), coordinates (value)
 
 // floor 0
