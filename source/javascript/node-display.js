@@ -83,15 +83,84 @@ function setUp(){
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     // inserts all of the room number data into the data list for auto fill
-    let classroomIt = classrooms.keys();
+    // let classroomIt = classrooms.keys();
     let datalist = document.getElementById("room-data");
 
+    /*
     for(let i=0; i<classrooms.size; i++){
         let option = document.createElement("option");
         datalist.appendChild(option);
 
         option.value = classroomIt.next().value;
+    }*/
+
+    // might want to optimize in the future
+    let floorplanIt = BR0_floorplan.keys();
+    for(let i=0; i<BR0_floorplan.size; i++){
+        let roomID = floorplanIt.next().value;
+
+        if(roomID.substring(0, 2) == "BR" && roomID.length == 5){
+            let option = document.createElement("option");
+            datalist.appendChild(option);
+            
+            option.value = roomID;
+        }
+
     }
+
+    floorplanIt = BR1_floorplan.keys();
+    for(let i=0; i<BR1_floorplan.size; i++){
+        let roomID = floorplanIt.next().value;
+
+        if(roomID.substring(0, 2) == "BR" && roomID.length == 5){
+            let option = document.createElement("option");
+            datalist.appendChild(option);
+            
+            option.value = roomID;
+        }
+
+    }
+
+    floorplanIt = BR2_floorplan.keys();
+    for(let i=0; i<BR2_floorplan.size; i++){
+        let roomID = floorplanIt.next().value;
+
+        if(roomID.substring(0, 2) == "BR" && roomID.length == 5){
+            let option = document.createElement("option");
+            datalist.appendChild(option);
+            
+            option.value = roomID;
+        }
+
+    }
+
+    floorplanIt = BR3_floorplan.keys();
+    for(let i=0; i<BR3_floorplan.size; i++){
+        let roomID = floorplanIt.next().value;
+
+        if(roomID.substring(0, 2) == "BR" && roomID.length == 5){
+            let option = document.createElement("option");
+            datalist.appendChild(option);
+            
+            option.value = roomID;
+        }
+
+    }
+
+    floorplanIt = BR4_floorplan.keys();
+    for(let i=0; i<BR4_floorplan.size; i++){
+        let roomID = floorplanIt.next().value;
+
+        if(roomID.substring(0, 2) == "BR" && roomID.length == 5){
+            let option = document.createElement("option");
+            datalist.appendChild(option);
+            
+            option.value = roomID;
+        }
+
+    }
+
+    drawCircle(50, 50, 1, "red");
 }
 
 img.onload = draw;
@@ -290,6 +359,26 @@ function displayBathrooms(){
         bathroomShown = false;
     }
 
+}
+
+function drawCircle(x, y, destNum, color){
+    // draws circle
+    ctx.beginPath();
+    ctx.arc(canvas.width * (x/100),
+            canvas.height * (y/100),
+            18, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = "#000000";
+    ctx.stroke();
+    
+    // figure out how to center text better
+    // writes number
+    ctx.font = "40px Arial"
+    ctx.fillStyle = "white";
+    ctx.fillText(destNum,   canvas.width * (x/100),
+                            canvas.height * (y/100));
 }
 
 function checkFloor(node){
