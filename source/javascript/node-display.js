@@ -361,13 +361,13 @@ function stepModeSwitch(){
     let arrowButtons = document.getElementsByClassName("arrow-button");
 
     if(stepMode){
-        stepModeButton.innerHTML = "Navigate by Floors";
+        stepModeButton.innerHTML = "Navigate by Steps";
         arrowButtons[0].setAttribute("onclick", "downFloor()");
         arrowButtons[1].setAttribute("onclick", "upFloor()");
         stepMode = false;
         changeFloorLabel();
     }else{
-        stepModeButton.innerHTML = "Navigate by Steps";
+        stepModeButton.innerHTML = "Navigate by Floors";
         arrowButtons[0].setAttribute("onclick", "downStep()");
         arrowButtons[1].setAttribute("onclick", "upStep()");
         stepMode = true;
