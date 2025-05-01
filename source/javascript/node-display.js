@@ -159,7 +159,9 @@ function setUp(){
         }
 
     }
-
+    // test rendering
+    drawLine(50, 50, 0, 100);
+    drawLine(0, 100, 50, 65);
     drawCircle(50, 50, 1, "red");
 }
 
@@ -379,6 +381,20 @@ function drawCircle(x, y, destNum, color){
     ctx.fillStyle = "white";
     ctx.fillText(destNum,   canvas.width * (x/100),
                             canvas.height * (y/100));
+}
+
+function drawLine(startX, startY, endX, endY){
+    ctx.beginPath();
+
+    ctx.lineWidth = 5;
+
+    ctx.moveTo( canvas.width * (startX/100),
+                canvas.height * (startY/100));
+
+    ctx.lineTo( canvas.width * (endX/100),
+                canvas.height * (endY/100));
+
+    ctx.stroke();
 }
 
 function checkFloor(node){
