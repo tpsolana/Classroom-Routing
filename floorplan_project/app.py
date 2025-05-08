@@ -28,12 +28,16 @@ from my_floorplans import BR0_floorplan  # Assuming your floorplan is in my_floo
 
 app = Flask(__name__)
 
-app.route("/find-path", methods=["POST"])
+@app.route("/find-path", methods=["POST"])
 def find_path():
-   #start = data["start"]
-   end = data["end"]
-   path, distance = dijkstra(graph, start, end)
-    return jsonify({"path": path, "distance": distance})
+    data = request.get_json()
+    start = data["start"]
+    end = data["end"]
+    path, distance = dijkstra(building_graph, start, end)
+    formatted_path_array = path.split("->")  # Convert the formatted path string into an array
+    return jsonify({"path": path, "distance": distance, "formatted_path_array": formatted_path_array})
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
