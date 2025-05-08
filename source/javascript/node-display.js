@@ -159,10 +159,6 @@ function setUp(){
         }
 
     }
-    // test rendering
-    drawLine(50, 50, 0, 100);
-    drawLine(0, 100, 50, 65);
-    drawCircle(50, 50, 1, "red");
 }
 
 img.onload = draw;
@@ -537,6 +533,7 @@ function switchNodeDisplay(){
 
 // stole this from annabel's branch, still need to figure out how this works properly
 async function findPath() {
+    /*
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
 
@@ -548,5 +545,10 @@ async function findPath() {
 
     const data = await res.json();
 
-    console.log(`Path: ${data.path}, Distance: ${data.distance}`);
+    console.log(`Path: ${data.path}, Distance: ${data.distance}`);*/
+
+    // test rendering
+    drawLine(50, 50, 0, 100);
+    drawLine(0, 100, 50, 65);
+    drawCircle(50, 50, 1, "red");
 }
