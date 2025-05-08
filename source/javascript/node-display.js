@@ -249,6 +249,7 @@ function removeDestination(destNum){
 
 function displayClassroom(){
     document.getElementById('node-container').innerHTML = "";
+    findPath();
 
     let startInput = document.getElementById("starting").value;
 
@@ -259,15 +260,14 @@ function displayClassroom(){
     for (let i = 1; i <= destinationCount; i++) {
         let destInput = document.getElementById("destination-" + i);
         if (destInput && destInput.value) {
-            let roomNumber = parseInt(destInput.value);
             
-            if(classrooms.get(roomNumber) == undefined){
+            if(BR0_floorplan.get(destInput.value) == undefined){
                 document.getElementById('node-container').innerHTML = "";
                 alert("Please enter a valid room number.");
                 break;
             }
 
-            displayNodes(roomNumber, "destPoint-" + i, "destination");
+            displayNodes(destInput.value, "destPoint-" + i, "destination");
         }
     }
 
@@ -275,7 +275,7 @@ function displayClassroom(){
 }
 
 function displayNodes(roomNumber, eleId, className){
-    if(classrooms.get(roomNumber) != undefined){
+    if(BR0_floorplan.get(roomNumber) != undefined){
         let node = document.getElementById(eleId);
         
         if (!node) {
@@ -300,8 +300,8 @@ function displayNodes(roomNumber, eleId, className){
         // Set class and position
         node.className = className;
         node.style.position = 'absolute'; 
-        node.style.left = classrooms.get(roomNumber).x + "%";
-        node.style.bottom = classrooms.get(roomNumber).y + "%";
+        node.style.left = BR0_floorplan.get(roomNumber).x + "%";
+        node.style.bottom = BR0_floorplan.get(roomNumber).y + "%";
         
         // Make it visible
         node.style.width = "15px";
@@ -377,10 +377,12 @@ function drawCircle(x, y, destNum, color){
     
     // figure out how to center text better
     // writes number
-    ctx.font = "40px Arial"
+    let offsetX = 9;
+    let offsetY = -10;
+    ctx.font = "35px Arial"
     ctx.fillStyle = "white";
-    ctx.fillText(destNum,   canvas.width * (x/100),
-                            canvas.height * (y/100));
+    ctx.fillText(destNum,   canvas.width * (x/100)-offsetX,
+                            canvas.height * (y/100)-offsetY);
 }
 
 function drawLine(startX, startY, endX, endY){
@@ -531,4 +533,20 @@ function switchNodeDisplay(){
         }
 
     }
+}
+
+// stole this from annabel's branch, still need to figure out how this works properly
+async function findPath() {
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+
+    const res = await fetch("/find-path", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ start, end })
+    });
+
+    const data = await res.json();
+
+    console.log(`Path: ${data.path}, Distance: ${data.distance}`);
 }
