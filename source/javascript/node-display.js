@@ -66,7 +66,19 @@ classrooms.set(427, {x: 32, y: 32, gender: "F"});
 classrooms.set(429, {x: 32, y: 38, gender: "F"});
 classrooms.set(433, {x: 36, y: 32, gender: "M"});
 
+// Handicap accessible entrances and routes
+const handicapAccessible = {
+    entrances: [
+        { floor: 1, x: 49, y: 15, name: "Main Entrance" }, // Front entrance
+        { floor: 1, x: 76, y: 78, name: "East Entrance" }  // Side entrance
+    ],
+    elevators: [
+        { x: 35, y: 60 } // Position of elevator on all floors
+    ]
+};
+
 let destinationCount = 1;
+let handicapMode = false;
 
 function resetRoute(){
     document.getElementById("destinations-container").innerHTML = "";
@@ -75,7 +87,16 @@ function resetRoute(){
     addDestination();
 
     bathroomShown = false;
-    document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
+    
+    // Reset toggle switches
+    if (document.getElementById('bathroom-toggle')) {
+        document.getElementById('bathroom-toggle').checked = false;
+    }
+    
+    if (document.getElementById('handicap-toggle')) {
+        document.getElementById('handicap-toggle').checked = false;
+        handicapMode = false;
+    }
 }
 
 function addDestination(){
@@ -166,6 +187,16 @@ function displayClassroom(){
         }
     }
 
+    // If we're in handicap mode, display accessible entrances and elevators
+    if (handicapMode) {
+        displayHandicapAccessPoints();
+    }
+
+    // If bathroom toggle is checked, display bathrooms
+    if (document.getElementById('bathroom-toggle') && document.getElementById('bathroom-toggle').checked) {
+        displayBathrooms();
+    }
+
     changeStep();
 }
 
@@ -223,6 +254,12 @@ function displayNodes(roomNumber, eleId, className){
             case "bathroomM":
                 node.style.backgroundColor = "#1d41b0";
                 break;
+
+            case "handicap-access":
+                node.style.backgroundColor = "#27ae60";
+                node.style.width = "20px";
+                node.style.height = "20px";
+                break;
         }
 
     }
@@ -236,26 +273,92 @@ function displayBathrooms(){
             displayNodes(bathrooms[i], "BR"+bathrooms[i], "bathroom"+classrooms.get(bathrooms[i]).gender);
         }
         
-        document.getElementById("show-bathrooms").innerHTML = "Hide Bathrooms";
-
         bathroomShown = true;
-    }else{
-        for(let i=0; i<bathrooms.length; i++){
-            let bathroom = document.getElementById("BR"+bathrooms[i]);
-
-            if(bathroom){
-                bathroom.remove();
-            }else{
-                break;
-            }
-
-        }
-
-        document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
-
-        bathroomShown = false;
+    } else {
+        hideBathrooms();
     }
 
+    // Update the toggle in the help dropdown to match the current state
+    if (document.getElementById('bathroom-toggle')) {
+        document.getElementById('bathroom-toggle').checked = bathroomShown;
+    }
+}
+
+function hideBathrooms() {
+    for(let i=0; i<bathrooms.length; i++){
+        let bathroom = document.getElementById("BR"+bathrooms[i]);
+
+        if(bathroom){
+            bathroom.remove();
+        }else{
+            break;
+        }
+    }
+    
+    bathroomShown = false;
+}
+
+// Handicap accessibility functions
+function enableHandicapMode() {
+    handicapMode = true;
+    displayHandicapAccessPoints();
+    // You could add additional accessibility features here
+    console.log("Handicap accessible mode enabled");
+}
+
+function disableHandicapMode() {
+    handicapMode = false;
+    removeHandicapAccessPoints();
+    console.log("Handicap accessible mode disabled");
+}
+
+function displayHandicapAccessPoints() {
+    // Display accessible entrances
+    handicapAccessible.entrances.forEach((entrance, index) => {
+        if (entrance.floor === floor) {
+            const node = document.createElement('div');
+            node.id = `handicap-entrance-${index}`;
+            node.className = 'handicap-access';
+            node.style.position = 'absolute';
+            node.style.left = entrance.x + "%";
+            node.style.bottom = entrance.y + "%";
+            node.style.width = "20px";
+            node.style.height = "20px";
+            node.style.borderRadius = "50%";
+            node.style.backgroundColor = "#27ae60";
+            node.style.border = "3px solid white";
+            node.style.zIndex = "25";
+            node.innerHTML = "♿";
+            node.title = entrance.name;
+            document.getElementById('node-container').appendChild(node);
+        }
+    });
+
+    // Display elevators on each floor
+    handicapAccessible.elevators.forEach((elevator, index) => {
+        const node = document.createElement('div');
+        node.id = `elevator-${index}`;
+        node.className = 'handicap-access';
+        node.style.position = 'absolute';
+        node.style.left = elevator.x + "%";
+        node.style.bottom = elevator.y + "%";
+        node.style.width = "20px";
+        node.style.height = "20px";
+        node.style.borderRadius = "3px";
+        node.style.backgroundColor = "#27ae60";
+        node.style.border = "3px solid white";
+        node.style.zIndex = "25";
+        node.innerHTML = "E";
+        node.title = "Elevator";
+        document.getElementById('node-container').appendChild(node);
+    });
+}
+
+function removeHandicapAccessPoints() {
+    const nodes = document.querySelectorAll('.handicap-access');
+    nodes.forEach(node => {
+        node.remove();
+    });
 }
 
 function checkFloor(node){
@@ -308,9 +411,11 @@ function downStep(){
 
 function changeStep(){
     let node = document.getElementById("destPoint-"+step);
-    floor = parseInt(node.alt/100);
-    changeFloorLabel();
-    switchNodeDisplay();
+    if (node) {
+        floor = parseInt(node.alt/100);
+        changeFloorLabel();
+        switchNodeDisplay();
+    }
 }
 
 let stepMode = false;
@@ -325,12 +430,12 @@ function stepModeSwitch(){
     let arrowButtons = document.getElementsByClassName("arrow-button");
 
     if(stepMode){
-        stepModeButton.innerHTML = "Navigate by Floors";
+        stepModeButton.innerHTML = "Navigate by Steps";
         arrowButtons[0].setAttribute("onclick", "downFloor()");
         arrowButtons[1].setAttribute("onclick", "upFloor()");
         stepMode = false;
     }else{
-        stepModeButton.innerHTML = "Navigate by Steps";
+        stepModeButton.innerHTML = "Navigate by Floors";
         arrowButtons[0].setAttribute("onclick", "downStep()");
         arrowButtons[1].setAttribute("onclick", "upStep()");
         stepMode = true;
@@ -352,13 +457,10 @@ function changeFloorLabel(){
 }
 
 function switchNodeDisplay(){
-    //clear nodes
-    //document.getElementById('node-container').innerHTML = "";
-    
     // hides the displays proper nodes based on floor
     for (let i = 0; i <= destinationCount; i++) {
         let node = i == 0 ? document.getElementById("startPoint"):
-                            document.getElementById("destPoint-"+i);
+                           document.getElementById("destPoint-"+i);
 
         if(node){
             if(checkFloor(node)){
@@ -369,21 +471,75 @@ function switchNodeDisplay(){
         }else if(i > 0){
             break;
         }
-
     }
 
-    for(let i=0; i<bathrooms.length; i++){
-        let bathroom = document.getElementById("BR"+bathrooms[i]);
+    // Update bathroom visibility based on current floor
+    if (bathroomShown) {
+        for(let i=0; i<bathrooms.length; i++){
+            let bathroom = document.getElementById("BR"+bathrooms[i]);
 
-        if(bathroom){
-            if(checkFloor(bathroom)){
-                bathroom.hidden = false;
-            }else{
-                bathroom.hidden = true;
+            if(bathroom){
+                if(checkFloor(bathroom)){
+                    bathroom.hidden = false;
+                }else{
+                    bathroom.hidden = true;
+                }
             }
-        }else if(i > 0){
-            break;
         }
+    }
 
+    // Update handicap access points visibility
+    if (handicapMode) {
+        removeHandicapAccessPoints();
+        displayHandicapAccessPoints();
     }
 }
+
+// Help popup toggle function
+function helpPopup() {
+    const dropdown = document.getElementById("helpDropdown");
+    dropdown.classList.toggle("show");
+}
+
+// Initialize event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const bathroomToggle = document.getElementById('bathroom-toggle');
+    if (bathroomToggle) {
+        bathroomToggle.addEventListener('change', function() {
+            if (this.checked) {
+                if (!bathroomShown) {
+                    displayBathrooms();
+                }
+            } else {
+                if (bathroomShown) {
+                    hideBathrooms();
+                }
+            }
+        });
+    }
+
+    // Get the handicap toggle
+    const handicapToggle = document.getElementById('handicap-toggle');
+    if (handicapToggle) {
+        handicapToggle.addEventListener('change', function() {
+            if (this.checked) {
+                enableHandicapMode();
+            } else {
+                disableHandicapMode();
+            }
+        });
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function(event) {
+        if (!event.target.matches('.helpMe') && !event.target.closest('.dropdown-content')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    });
+});

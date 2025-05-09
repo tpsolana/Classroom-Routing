@@ -12,9 +12,7 @@
 
         <div class="inputs">
             <form>
-
                 <label for="starting">Starting Point:</label><br>
-                <!--<input type="text" id="starting" name="starting" placeholder="Enter your starting point: "><br> -->
                 <select id="starting" name="starting">
                     <option value="none">None</option>
                     <option value="front">Front</option>
@@ -32,12 +30,11 @@
                 
                 <div class="button-group">
                     <button type="button" id="add-destination" onclick="addDestination()">+ Add Destination</button>
-                    <!-- Will not be functional until we figure out how to show the route-->
                     <button type="button" id="show-route" onclick="displayClassroom()" value="Enter">Show Route</button>
-                    <button type="button" id="show-bathrooms" onclick="displayBathrooms()" value="Enter">Show Bathrooms</button>
+                    <!-- Hide this button since we're replacing it with the toggle -->
+                    <button type="button" id="show-bathrooms" onclick="displayBathrooms()" style="display: none;">Show Bathrooms</button>
                     <button type="button" id="reset" onclick="resetRoute()">Reset</button>
                 </div>
-
             </form>
         </div>
 
@@ -51,29 +48,47 @@
             <div class="map-container">
                 <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
                 <div id="node-container">
-
+                    <!-- This is where the nodes are dynamically added -->
                 </div>
             </div>
 
             <div class="helpButton">
-                <button onclick="helpPopup()" class="helpMe">?</button>
+                <button class="helpMe" onclick="helpPopup()">?</button>
                 <div id="helpDropdown" class="dropdown-content">
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round bathroom"></span>
-                    </label>
-
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round handicap"></span>
-                    </label>
-
+                    <h3>Map Navigation Help</h3>
+                    <p>This application helps you navigate Bradley Hall. Select your starting point and destinations, then use the floor controls to move between levels.</p>
+                    
+                    <div class="toggle-container">
+                        <label for="bathroom-toggle">Show Bathrooms:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="bathroom-toggle">
+                            <span class="slider round bathroom"></span>
+                        </label>
+                        <span class="legend-item female">F</span>
+                        <span class="legend-item male">M</span>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <label for="handicap-toggle">Handicap Accessible Routes:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="handicap-toggle">
+                            <span class="slider round handicap"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="help-info">
+                        <p><strong>Tips:</strong></p>
+                        <ul>
+                            <li>Use the floor controls to navigate between floors</li>
+                            <li>Toggle step mode to navigate by destination</li>
+                            <li>Female bathrooms shown in pink</li>
+                            <li>Male bathrooms shown in blue</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
         </div>
 
         <script src="javascript/node-display.js"></script>
-        
     </body>
 </html>

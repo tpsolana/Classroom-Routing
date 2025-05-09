@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -55,6 +54,7 @@ input[type="text"]:focus, select:focus {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: relative; /* Added for absolute positioning of help button */
 }
 
 .floorplan img {
@@ -144,7 +144,7 @@ button:hover {
     z-index: 10;
 }
 
-.destination, .bathroomM, .bathroomF {
+.destination, .bathroomM, .bathroomF, .handicap-access {
     border: 3px solid white;
     color: white;
     font-weight: bold;
@@ -191,47 +191,178 @@ button:hover {
     content: '';
   }
   
-  /* Dropdown Button */
-.dropbtn {
-    background-color: #3498DB;
+  .helpButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.helpMe {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3498db;
     color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-  }
-  
-  /* Dropdown button on hover & focus */
-  .dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.helpMe:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    background-color: white;
+    min-width: 280px;
+    max-width: 85vw; /* Responsive width for mobile */
+    text-align: left;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 110;
+    overflow-y: auto;
+    max-height: 70vh; /* Prevent overflow on smaller screens */
+}
+
+.dropdown-content h3 {
+    margin-top: 0;
+    color: #3498db;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.dropdown-content p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.show {
+    display: block;
+}
+
+/* Toggle Switch Styling */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.toggle-container label {
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.switch {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
     position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-  .show {display:block;}
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider.bathroom {
+    background-color: #db05c6;
+}
+
+input:checked + .slider.handicap {
+    background-color: #27ae60;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Legend items */
+.legend-item {
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: white;
+}
+
+.legend-item.female {
+    background-color: #db05c6;
+}
+
+.legend-item.male {
+    background-color: #1d41b0;
+}
+
+/* Help info styling */
+.help-info {
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.help-info ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.help-info li {
+    font-size: 13px;
+    margin-bottom: 5px;
+}
