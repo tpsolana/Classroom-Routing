@@ -67,7 +67,7 @@ const BR0_floorplan = new Map([
     ["BR043", {x: null, y: null}],
     ["BR045", {x: null, y: null}],
     ["BR047", {x: null, y: null}],
-    ["BR046", {x: null, y: null}],
+    ["BR046", {x: 62, y: 80}],
     ["BR050", {x: 73, y: 60}],
     ["BR051", {x: null, y: null}],
     ["BR048", {x: null, y: null}],

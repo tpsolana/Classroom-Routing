@@ -177,6 +177,10 @@ function resetRoute(){
 
     bathroomShown = false;
     document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
+    
+    clearCanvas();
+    draw();
+    pathShown = false;
 }
 
 function addDestination(){
@@ -243,33 +247,82 @@ function removeDestination(destNum){
 
 }
 
+let pathShown = false;
 function displayClassroom(){
     document.getElementById('node-container').innerHTML = "";
     findPath();
 
     let startInput = document.getElementById("starting").value;
 
+    pathShown = true;
+
     if(startInput != ""){
         displayNodes(startInput, "startPoint", "start");
     }
-
+    /*
     for (let i = 1; i <= destinationCount; i++) {
         let destInput = document.getElementById("destination-" + i);
         if (destInput && destInput.value) {
             
-            if(BR0_floorplan.get(destInput.value) == undefined){
+            if( BR0_floorplan.get(destInput.value) == undefined ||
+                BR1_floorplan.get(destInput.value) == undefined ||
+                BR2_floorplan.get(destInput.value) == undefined ||
+                BR3_floorplan.get(destInput.value) == undefined ||
+                BR4_floorplan.get(destInput.value) == undefined){
                 document.getElementById('node-container').innerHTML = "";
                 alert("Please enter a valid room number.");
                 break;
             }
 
-            displayNodes(destInput.value, "destPoint-" + i, "destination");
+            // displayNodes(destInput.value, "destPoint-" + i, "destination");
+            displayNodes(destInput.value, i);
+        }
+    }*/
+
+    let floorData;
+    switch(floor){
+        case 0:
+            floorData = BR0_floorplan;
+            break;
+        case 1:
+            floorData = BR1_floorplan;
+            break;
+        case 2:
+            floorData = BR2_floorplan;
+            break;
+        case 3:
+            floorData = BR3_floorplan;
+            break;
+        case 4:
+            floorData = BR4_floorplan;
+            break;
+    }
+
+    for(let i=1; i<destinationCount; i++){
+        let destInput = document.getElementById("destination-" + i).value;
+        let destInput2 = document.getElementById("destination-" + (i+1)).value;
+
+        if( destInput && destInput &&
+            floorData.get(destInput) != undefined &&
+            floorData.get(destInput2) != undefined
+        ){
+                drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
+                            floorData.get(destInput2).x, floorData.get(destInput2).y);
+                drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
+                drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
         }
     }
 
     changeStep();
 }
 
+function displayNodes(input, destNum){
+    if(BR0_floorplan.get(input) != undefined){
+        drawCircle(BR0_floorplan.get(input).x, BR0_floorplan.get(input).y, destNum, "red");
+    }
+}
+
+/*
 function displayNodes(roomNumber, eleId, className){
     if(BR0_floorplan.get(roomNumber) != undefined){
         let node = document.getElementById(eleId);
@@ -328,6 +381,7 @@ function displayNodes(roomNumber, eleId, className){
 
     }
 }
+*/
 
 let bathroomShown = false;
 
@@ -531,6 +585,10 @@ function switchNodeDisplay(){
     }
 }
 
+function clearCanvas(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 // stole this from annabel's branch, still need to figure out how this works properly
 async function findPath() {
     /*
@@ -547,8 +605,9 @@ async function findPath() {
 
     console.log(`Path: ${data.path}, Distance: ${data.distance}`);*/
 
+    /*
     // test rendering
     drawLine(50, 50, 0, 100);
     drawLine(0, 100, 50, 65);
-    drawCircle(50, 50, 1, "red");
+    drawCircle(50, 50, 1, "red");*/
 }
