@@ -183,8 +183,8 @@ const BR1_floorplan = new Map([
     ["stairR3", {x: null, y: null}],
 
     // Intersections
-    ["intersec0", {x: 6, y: 36}],
-    ["intersec1", {x: 6, y: 65}],
+    ["intersec0", {x: 6, y: 33}],
+    ["intersec1", {x: 6, y: 67}],
     ["intersec2", {x: 6, y: 89}],
     ["intersec3", {x: 17, y: 30}],
     ["intersec4", {x: null, y: null}],

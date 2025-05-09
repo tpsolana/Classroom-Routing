@@ -263,6 +263,9 @@ let pathShown = false;
 function displayClassroom(){
     document.getElementById('node-container').innerHTML = "";
     findPath();
+    
+    clearCanvas();
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     let startInput = document.getElementById("starting").value;
 
@@ -320,15 +323,15 @@ function displayClassroom(){
         destInput = document.getElementById("destination-" + i).value;
         let destInput2 = document.getElementById("destination-" + (i+1)).value;
 
-        if( destInput && destInput &&
+        if( destInput && destInput2 &&
             floorData.get(destInput) != undefined &&
             floorData.get(destInput2) != undefined
         ){
-                drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
-                            floorData.get(destInput2).x, floorData.get(destInput2).y);
-                            
-                drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
-                drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
+            drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
+                        floorData.get(destInput2).x, floorData.get(destInput2).y);
+                        
+            drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
+            drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
         }
     }
 
