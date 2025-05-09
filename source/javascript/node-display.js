@@ -441,14 +441,14 @@ function drawCircle(x, y, destNum, color){
     ctx.fillStyle = color;
     ctx.fill();
     ctx.lineWidth = 6;
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = "white";
     ctx.stroke();
     
     // figure out how to center text better
     // writes number
-    let offsetX = 9;
-    let offsetY = -10;
-    ctx.font = "35px Arial"
+    let offsetX = 8;
+    let offsetY = -11;
+    ctx.font = "bold 30px Arial";
     ctx.fillStyle = "white";
     ctx.fillText(destNum,   canvas.width * (x/100)-offsetX,
                             canvas.height * (y/100)-offsetY);
@@ -458,6 +458,7 @@ function drawLine(startX, startY, endX, endY){
     ctx.beginPath();
 
     ctx.lineWidth = 5;
+    ctx.strokeStyle = "white";
 
     ctx.moveTo( canvas.width * (startX/100),
                 canvas.height * (startY/100));
