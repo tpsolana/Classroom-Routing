@@ -165,6 +165,11 @@ img.onload = draw;
 
 function draw(){                
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // basically displays nodes and paths based on what floor
+    if(pathShown){
+        displayClassroom();
+    }
 }
 
 let destinationCount = 1;
@@ -245,6 +250,13 @@ function removeDestination(destNum){
         changeStep();
     }
 
+    if(destinationCount == 0){
+        pathShown = false;
+    }
+
+    clearCanvas();
+    draw();
+
 }
 
 let pathShown = false;
@@ -298,8 +310,14 @@ function displayClassroom(){
             break;
     }
 
+
+    let destInput = document.getElementById("destination-1").value;
+    if(destinationCount == 1 && floorData.get(destInput) != undefined){
+        drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, 1, "red");
+    }
+
     for(let i=1; i<destinationCount; i++){
-        let destInput = document.getElementById("destination-" + i).value;
+        destInput = document.getElementById("destination-" + i).value;
         let destInput2 = document.getElementById("destination-" + (i+1)).value;
 
         if( destInput && destInput &&
@@ -308,6 +326,7 @@ function displayClassroom(){
         ){
                 drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
                             floorData.get(destInput2).x, floorData.get(destInput2).y);
+                            
                 drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
                 drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
         }
