@@ -3,12 +3,12 @@
 
 // room number (key), coordinates (value)
 const BR0_floorplan = new Map([
-    ["stairR1", {x: null, y: null}],
-    ["stairL1", {x: null, y: null}],
-    ["stairL2", {x: null, y: null}],
-    ["elevator", {x: null, y: null}],
-    ["stairR3", {x: null, y: null}],
-    ["stairR2", {x: null, y: null}],
+    ["stairR1", {x: 77, y: 75}],
+    ["stairL1", {x: 22, y: 75}],
+    ["stairL2", {x: 17, y: 6}],
+    ["elevator", {x: 14, y: 12}],
+    ["stairR3", {x: 67, y: 16}],
+    ["stairR2", {x: 82, y: 28}],
 
     //  Intersections
     ["intersec0_F0", {x: 6, y: 36}],
@@ -97,12 +97,12 @@ const BR0_floorplan = new Map([
     ["Lwomens", {x: 34, y: 56}],
 
     //  Nodes for front of doors -> helps line drawing
-    ["stairR1_front", {x: null, y: null}],
-    ["stairL1_front", {x: null, y: null}],
-    ["stairL2_front", {x: null, y: null}],
-    ["elevator_front", {x: null, y: null}],
-    ["stairR3_front", {x: null, y: null}],
-    ["stairR2_front", {x: null, y: null}],
+    ["stairR1_front", {x: 78, y: 66}],
+    ["stairL1_front", {x: 21, y: 66}],
+    ["stairL2_front", {x: 17, y: 12}],
+    ["elevator_front", {x: 17, y: 12}],
+    ["stairR3_front", {x: 66, y: 29}],
+    ["stairR2_front", {x: 82, y: 40}],
 
     //  Rooms
     ["BR001_front", {x: 15, y: 89}],
@@ -701,25 +701,25 @@ const BR4_floorplan = new Map([
     ["BR469", {x: 63, y: 60}],
 
     // Intersections
-    ["intersec0_F4", {x: null, y: null}],
-    ["intersec1_F4", {x: null, y: null}],
-    ["intersec2_F4", {x: null, y: null}],
-    ["intersec3_F4", {x: null, y: null}],
-    ["intersec4_F4", {x: null, y: null}],
-    ["intersec5_F4", {x: null, y: null}],
-    ["intersec6_F4", {x: null, y: null}],
-    ["intersec7_F4", {x: null, y: null}],
-    ["intersec8_F4", {x: null, y: null}],
-    ["intersec9_F4", {x: null, y: null}],
-    ["intersec10_F4", {x: null, y: null}],
-    ["intersec11_F4", {x: null, y: null}],
+    ["intersec0_F4", {x: 18, y: 14}],
+    ["intersec1_F4", {x: 18, y: 68}],
+    ["intersec2_F4", {x: 29, y: 57}],
+    ["intersec3_F4", {x: 29, y: 69}],
+    ["intersec4_F4", {x: 50, y: 58}],
+    ["intersec5_F4", {x: 50, y: 69}],
+    ["intersec6_F4", {x: 60, y: 69}],
+    ["intersec7_F4", {x: 60, y: 78}],
+    ["intersec8_F4", {x: 70, y: 69}],
+    ["intersec9_F4", {x: 70, y: 77}],
+    ["intersec10_F4", {x: 76, y: 57}],
+    ["intersec11_F4", {x: 76, y: 68}],
 
 
     // Nodes in front of door
-    ["stairL1_front", {x: null, y: null}],
-    ["stairL2_front", {x: null, y: null}],
-    ["stairR1_front", {x: null, y: null}],
-    ["elevator_front", {x: null, y: null}],
+    ["stairL1_front", {x: 22, y: 69}],
+    ["stairL2_front", {x: 18, y: 13}],
+    ["stairR1_front", {x: 76, y: 69}],
+    ["elevator_front", {x: 17, y: 12}],
 
     ["BR440_front", {x: 47, y: 69}],
     ["BR426_front", {x: 33, y: 69}],
