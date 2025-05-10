@@ -174,13 +174,13 @@ const BR0_floorplan = new Map([
 ]);
 
 const BR1_floorplan = new Map([
-    ["frontEntrance", {x: null, y: null}],
-    ["backEntrance", {x: null, y: null}],
-    ["stairL1", {x: null, y: null}],
-    ["stairL2", {x: null, y: null}],
-    ["stairR1", {x: null, y: null}],
-    ["stairR2", {x: null, y: null}],
-    ["stairR3", {x: null, y: null}],
+    ["frontEntrance", {x: 50, y: 78}],
+    ["backEntrance", {x: 67, y: 13}],
+    ["stairL1", {x: 22, y: 75}],
+    ["stairL2", {x: 17, y: 5}],
+    ["stairR1", {x: 77, y: 76}],
+    ["stairR2", {x: 82, y: 24}],
+    ["stairR3", {x: 66, y: 19}],
 
     // Intersections
     ["intersec0_F1", {x: 6, y: 33}],
@@ -265,13 +265,13 @@ const BR1_floorplan = new Map([
     ["BR173", {x: 88, y: 93}],
 
     // Nodes in front of rooms
-    ["frontEntrance_front", {x: null, y: null}],
-    ["backEntrance_front", {x: null, y: null}],
-    ["stairL1_front", {x: null, y: null}],
-    ["stairL2_front", {x: null, y: null}],
-    ["stairR1_front", {x: null, y: null}],
-    ["stairR2_front", {x: null, y: null}],
-    ["stairR3_front", {x: null, y: null}],
+    ["frontEntrance_front", {x: 50, y: 67}],
+    ["backEntrance_front", {x: 66, y: 24}],
+    ["stairL1_front", {x: 22, y: 74}],
+    ["stairL2_front", {x: 18, y: 13}],
+    ["stairR1_front", {x: 78, y: 74}],
+    ["stairR2_front", {x: 82, y: 29}],
+    ["stairR3_front", {x: 66, y: 23}],
     
     ["BR145_front", {x: 54, y: 64}],
     ["BR132_front", {x: 37, y: 65}],
