@@ -326,7 +326,6 @@ function displayClassroom(){
             floorData.get(destInput) != undefined &&
             floorData.get(destInput2) != undefined
         ){
-            findPath(destInput, destInput2, floorData);
 
             
             /*
@@ -335,6 +334,7 @@ function displayClassroom(){
             */     
             drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
             drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
+            findPath(destInput, destInput2, floorData);
         }
     }
 
