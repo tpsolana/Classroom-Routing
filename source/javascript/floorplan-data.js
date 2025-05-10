@@ -174,11 +174,11 @@ const BR0_floorplan = new Map([
 ]);
 
 const BR1_floorplan = new Map([
-    ["frontEntrance", {x: null, y: null}],
-    ["backEntrance", {x: null, y: null}],
-    ["stairL1", {x: null, y: null}],
+    ["frontEntrance", {x: 50, y: 92}],
+    ["backEntrance", {x: 67, y: 9}],
+    ["stairL1", {x: 21, y: 77}],
     ["stairL2", {x: null, y: null}],
-    ["stairR1", {x: null, y: null}],
+    ["stairR1", {x: 79, y: 77}],
     ["stairR2", {x: null, y: null}],
     ["stairR3", {x: null, y: null}],
 

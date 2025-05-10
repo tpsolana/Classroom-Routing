@@ -172,16 +172,16 @@ function draw(){
     }
 }
 
-let destinationCount = 1;
+let destinationCount = 2;
 
 function resetRoute(){
     document.getElementById("destinations-container").innerHTML = "";
     document.getElementById('node-container').innerHTML = "";
-    destinationCount = 0;
-    addDestination();
+    destinationCount = 1;
+    document.getElementById("destination-1").value = "";
 
     bathroomShown = false;
-    document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
+    //document.getElementById("show-bathrooms").innerHTML = "Show Bathrooms";
     
     clearCanvas();
     draw();
@@ -190,7 +190,7 @@ function resetRoute(){
 
 function addDestination(){
     // limit of 5
-    if(destinationCount >= 5){
+    if(destinationCount > 5){
         return;
     }
 
@@ -250,7 +250,7 @@ function removeDestination(destNum){
         changeStep();
     }
 
-    if(destinationCount == 0){
+    if(destinationCount == 1){
         pathShown = false;
     }
 
@@ -266,13 +266,7 @@ function displayClassroom(){
     clearCanvas();
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    let startInput = document.getElementById("starting").value;
-
     pathShown = true;
-
-    if(startInput != ""){
-        displayNodes(startInput, "startPoint", "start");
-    }
     /*
     for (let i = 1; i <= destinationCount; i++) {
         let destInput = document.getElementById("destination-" + i);
@@ -314,28 +308,76 @@ function displayClassroom(){
 
 
     let destInput = document.getElementById("destination-1").value;
-    if(destinationCount == 1 && floorData.get(destInput) != undefined){
-        drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, 1, "red");
-    }
 
-    for(let i=1; i<destinationCount; i++){
-        destInput = document.getElementById("destination-" + i).value;
-        let destInput2 = document.getElementById("destination-" + (i+1)).value;
+    switch(destInput){
+        // predetermined paths for demonstrating the concept
+        // 150 -> 146
+        case "BR150":
+            if(floor == 1){
+                drawLine(73, 60, 73, 65);
+                drawLine(73, 65, 67, 65);
+                drawLine(67, 65, 68, 80);
+                drawCircle(73, 60, 1, "red");
+                drawCircle(68, 80, 2, "red");
+            }
+            break;
+        // 025 -> 145 -> 142 -> 250
+        case "BR025":
+            switch(floor){
+                case 0:
+                    drawLine(22, 60, 24, 67);
+                    drawLine(24, 67, 21, 67);
+                    drawLine(21, 67, 21, 77);
+                    drawCircle(22, 60, 1, "red");
+                    break;
+                case 1:
+                    drawLine(21, 77, 21, 67);
+                    drawLine(21, 67, 50, 67);
+                    drawLine(50, 67, 54, 64);
+                    drawLine(54, 64, 48, 55);
+                    drawLine(50, 67, 62, 67);
+                    drawLine(62, 67, 58, 80);
+                    drawLine(62, 67, 79, 67);
+                    drawLine(79, 67, 79, 77);
+                    drawCircle(48, 55, 2, "red");
+                    drawCircle(58, 80, "3", "red");
+                    break;
+                case 2:
+                    drawLine(79, 77, 79, 67);
+                    drawLine(79, 67, 80, 65);
+                    drawLine(80, 65, 73, 60);
+                    drawCircle(73, 60, "4", "red");
+                    break;
 
-        if( destInput && destInput2 &&
-            floorData.get(destInput) != undefined &&
-            floorData.get(destInput2) != undefined
-        ){
-            findPath(destInput, destInput2);
+            }
 
-            
+            break;
+        // line very basic line rendering
+        default:
+                if(destinationCount == 1 && floorData.get(destInput) != undefined){
+                    drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, 1, "red");
+                }
 
-            drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
-                        floorData.get(destInput2).x, floorData.get(destInput2).y);
+                for(let i=1; i<destinationCount; i++){
+                    destInput = document.getElementById("destination-" + i).value;
+                    let destInput2 = document.getElementById("destination-" + (i+1)).value;
+
+                    if( destInput && destInput2 &&
+                        floorData.get(destInput) != undefined &&
+                        floorData.get(destInput2) != undefined
+                    ){
+                        findPath(destInput, destInput2);
+
                         
-            drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
-            drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
-        }
+
+                        drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
+                                    floorData.get(destInput2).x, floorData.get(destInput2).y);
+                                    
+                        drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
+                        drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
+                    }
+                }
+            break;
     }
 
     changeStep();
@@ -637,6 +679,7 @@ async function findPath(start, end) {
     drawLine(0, 100, 50, 65);
     drawCircle(50, 50, 1, "red");*/
 
+    /*
     try {
         const response = await fetch("http://localhost:5000/", {
             method: "POST",
@@ -658,5 +701,5 @@ async function findPath(start, end) {
     } catch (error) {
         console.error("Error fetching path:", error);
         alert("An error occurred while finding the path.");
-    }
+    }*/
 }

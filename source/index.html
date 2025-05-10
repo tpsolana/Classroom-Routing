@@ -13,32 +13,27 @@
         <div class="inputs">
             <form>
 
-                <label for="starting">Starting Point:</label><br>
+                <label for="destination-1">Destination 1:</label><br>
                 <!--<input type="text" id="starting" name="starting" placeholder="Enter your starting point: "><br> -->
-                <select id="starting" name="starting">
-                    <option value="none">None</option>
-                    <option value="front">Front</option>
-                    <option value="front-left">Front Left</option>
-                    <option value="front-right">Front Right</option>
-                </select>
+                <input type="text" id="destination-1" name="starting" class="destination-input" placeholder="Enter room number" list="room-data">
                 
                 <div id="destinations-container">
-                    <div class="destination-group" id="destination-group-1">
-                        <label for="destination-1" id="label-1">Destination 1:</label><br>
-                        <input type="text" id="destination-1" name="destination-1" class="destination-input" placeholder="Enter room number" list="room-data">
-                        <button type="button" class="remove-btn" onclick="removeDestination(1)">×</button>
+                    <div class="destination-group" id="destination-group-2">
+                        <label for="destination-2" id="label-2">Destination 2:</label><br>
+                        <input type="text" id="destination-2" name="destination-1" class="destination-input" placeholder="Enter room number" list="room-data">
+                        <button type="button" class="remove-btn" onclick="removeDestination(2)">×</button>
                     </div>
                 </div>
 
                 <datalist id="room-data">
-                            
+                    <option value="frontEntrance">Front Entrance</option>
+                    <option value="backEntrance">Back Entrance</option>
                 </datalist>
                 
                 <div class="button-group">
                     <button type="button" id="add-destination" onclick="addDestination()">+ Add Destination</button>
                     <!-- Will not be functional until we figure out how to show the route -->
                     <button type="button" id="show-route" onclick="displayClassroom()" value="Enter">Show Route</button>
-                    <button type="button" id="show-bathrooms" onclick="displayBathrooms()" value="Enter">Show Bathrooms</button>
                     <button type="button" id="reset" onclick="resetRoute()">Reset</button>
                 </div>
 
@@ -51,7 +46,6 @@
                 <span id="floor-label">Floor 1</span>
                 <button type="button" class="arrow-button" onclick="upFloor()">></button>
             </span>
-            <button id="step-mode-switch" style="float: right;" onclick="stepModeSwitch()">Navigate by Steps</button>
             <canvas class="map-container" id="map-container">
                 <img src="images/bradley_hall1.png" id="bradley-floor-map" alt="Bradley Hall First Floor Blueprint">
                 <div id="node-container">
