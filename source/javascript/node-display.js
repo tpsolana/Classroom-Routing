@@ -637,15 +637,10 @@ async function findPath(start, end) {
     drawLine(0, 100, 50, 65);
     drawCircle(50, 50, 1, "red");*/
 
-    if (!start || !end) {
-        alert("Please enter both a starting point and a destination.");
-        return;
-    }
-
     try {
-        const response = await fetch("/floorplan_project/app.py", {
+        const response = await fetch("http://localhost:5000/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
             body: JSON.stringify({ start, end })
         });
 

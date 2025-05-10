@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from my_pathfinding_module import connect_multiple_floors_v2, dijkstra
 from my_floorplans import BR0_floorplan
 from my_floorplans import BR1_floorplan
@@ -22,13 +22,9 @@ connectors_by_floor = [
 # Call your function to generate the building graph
 building_graph = connect_multiple_floors_v2(floors, connectors_by_floor)
 
+app = Flask(__name__, static_url_path="/source/javascript/node-display.js")
 
-from flask import Flask, render_template
-from my_floorplans import BR0_floorplan  # Assuming your floorplan is in my_floorplans.py
-
-app = Flask(__name__)
-
-@app.route('/source/javascript/node-display.js', methods=['POST'])
+@app.route('/', methods=['POST'])
 def find_path():
     data = request.json
     start_base = data.get('start')
