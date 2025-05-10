@@ -262,7 +262,6 @@ function removeDestination(destNum){
 let pathShown = false;
 function displayClassroom(){
     document.getElementById('node-container').innerHTML = "";
-    findPath();
     
     clearCanvas();
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -327,6 +326,10 @@ function displayClassroom(){
             floorData.get(destInput) != undefined &&
             floorData.get(destInput2) != undefined
         ){
+            findPath(destInput, destInput2);
+
+            
+
             drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
                         floorData.get(destInput2).x, floorData.get(destInput2).y);
                         
@@ -613,7 +616,7 @@ function clearCanvas(){
 }
 
 // stole this from annabel's branch, still need to figure out how this works properly
-async function findPath() {
+async function findPath(start, end) {
     /*
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
@@ -633,4 +636,32 @@ async function findPath() {
     drawLine(50, 50, 0, 100);
     drawLine(0, 100, 50, 65);
     drawCircle(50, 50, 1, "red");*/
+
+    if (!start || !end) {
+        alert("Please enter both a starting point and a destination.");
+        return;
+    }
+
+    try {
+        const response = await fetch("/floorplan_project/app.py", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ start, end })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error}`);
+            return;
+        }
+
+        const data = await response.json();
+        console.log(`Path: ${data.path}, Distance: ${data.distance}`);
+
+        // Use the path and distance to update the UI
+        drawPath(data.path);
+    } catch (error) {
+        console.error("Error fetching path:", error);
+        alert("An error occurred while finding the path.");
+    }
 }

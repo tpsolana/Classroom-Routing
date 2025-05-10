@@ -28,14 +28,20 @@ from my_floorplans import BR0_floorplan  # Assuming your floorplan is in my_floo
 
 app = Flask(__name__)
 
-@app.route("/source/javascript/node-display.js", methods=["POST"])
+@app.route('/source/javascript/node-display.js', methods=['POST'])
 def find_path():
-    data = request.get_json()
-    start = data["start"]
-    end = data["end"]
-    path, distance = dijkstra(building_graph, start, end)
-    formatted_path_array = path.split("->")  # Convert the formatted path string into an array
-    return jsonify({"path": path, "distance": distance, "formatted_path_array": formatted_path_array})
+    data = request.json
+    start_base = data.get('start')
+    end_base = data.get('end')
 
-if __name__ == "__main__":
+    if not start_base or not end_base:
+        return jsonify({"error": "Missing 'start' or 'end' parameter"}), 400
+
+    try:
+        path, distance = dijkstra(building_graph, start_base, end_base)
+        return jsonify({"path": path, "distance": distance})
+    except KeyError as e:
+        return jsonify({"error": f"Invalid node: {str(e)}"}), 400
+
+if __name__ == '__main__':
     app.run(debug=True)
