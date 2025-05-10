@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from my_pathfinding_module import connect_multiple_floors_v2, dijkstra
 from my_floorplans import BR0_floorplan
 from my_floorplans import BR1_floorplan
 from my_floorplans import BR2_floorplan
 from my_floorplans import BR3_floorplan
 from my_floorplans import BR4_floorplan
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -23,6 +24,11 @@ connectors_by_floor = [
 building_graph = connect_multiple_floors_v2(floors, connectors_by_floor)
 
 app = Flask(__name__, static_url_path="/source/javascript/node-display.js")
+CORS(app)
+
+@app.route('/')
+def index():
+    return send_from_directory('../source', '')
 
 @app.route('/', methods=['POST'])
 def find_path():

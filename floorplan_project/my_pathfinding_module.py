@@ -71,39 +71,9 @@ def dijkstra(graph, start_base, end_base):
         current_distance, current_node, raw_path = heapq.heappop(priority_queue)
 
         if current_node == end_node:
-            formatted_path = []
-            i = 0
-            while i < len(raw_path):
-                node = raw_path[i]
-                base_node = node.split("_F")[0]
-                formatted_path.append(base_node)
-
-                if i < len(raw_path) - 1:
-                    current_base = base_node
-                    next_base = raw_path[i+1].split("_F")[0]
-                    current_floor = int(node.split("_F")[-1])
-                    next_floor = int(raw_path[i+1].split("_F")[-1])
-
-                    if current_base.lower().startswith(("stair", "elevator")) and current_base == next_base and current_floor != next_floor:
-                        formatted_path[-1] = f"{current_base}"
-                        i += 1
-                    elif current_base.lower().startswith(("stair", "elevator")) and current_base != next_base and current_floor != next_floor:
-                        formatted_path[-1] = f"{current_base} (Floor {current_floor})"
-                    elif current_base != next_base and next_base.lower().startswith(("stair", "elevator")) and current_floor != next_floor:
-                        pass
-                i += 1
-
-            final_formatted_path = []
-            i = 0
-            while i < len(formatted_path):
-                node = formatted_path[i]
-                final_formatted_path.append(node)
-                if i < len(formatted_path) - 1:
-                    if not (formatted_path[i].lower().startswith(("stair", "elevator")) and formatted_path[i+1].lower().startswith(("stair", "elevator"))):
-                        final_formatted_path.append("->")
-                i += 1
-
-            return "->".join(final_formatted_path), current_distance
+            # Remove floor suffixes (_F0, _F1, etc.) from the raw path
+            cleaned_path = [node.split("_F")[0] for node in raw_path]
+            return cleaned_path, current_distance
 
         if current_distance > distances[current_node]:
             continue

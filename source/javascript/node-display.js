@@ -326,13 +326,13 @@ function displayClassroom(){
             floorData.get(destInput) != undefined &&
             floorData.get(destInput2) != undefined
         ){
-            findPath(destInput, destInput2);
+            findPath(destInput, destInput2, floorData);
 
             
-
+            /*
             drawLine(   floorData.get(destInput).x, floorData.get(destInput).y,
                         floorData.get(destInput2).x, floorData.get(destInput2).y);
-                        
+            */     
             drawCircle( floorData.get(destInput).x, floorData.get(destInput).y, i, "red");
             drawCircle( floorData.get(destInput2).x, floorData.get(destInput2).y, i+1, "red");
         }
@@ -616,7 +616,7 @@ function clearCanvas(){
 }
 
 // stole this from annabel's branch, still need to figure out how this works properly
-async function findPath(start, end) {
+async function findPath(start, end, floorData) {
     /*
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
@@ -651,10 +651,27 @@ async function findPath(start, end) {
         }
 
         const data = await response.json();
-        console.log(`Path: ${data.path}, Distance: ${data.distance}`);
+        // console.log(`Path: ${data.path}, Distance: ${data.distance}`);
+        console.log(data.path);
+        console.log(floorData.get(data.path[0]));
+        for(let i=0; i<data.path.length-1; i++){
+            let string1 = data.path[i];
+            let string2 = data.path[i+1];
+            if(string1.includes("intersec")){
+                string1 += "_F"+floor;
+            }
+            if(string2.includes("intersec")){
+                string2 += "_F"+floor;
+            }
 
-        // Use the path and distance to update the UI
-        drawPath(data.path);
+             drawLine(  floorData.get(string1).x, floorData.get(string1).y,
+                        floorData.get(string2).x, floorData.get(string2).y);
+            /*            
+            drawCircle( floorData.get(data.path[i]).x, floorData.get(data.path[i]).y, i, "red");
+            drawCircle( floorData.get(data.path[i+1]).x, floorData.get(data.path[i+1]).y, i+1, "red");
+            */
+        }
+
     } catch (error) {
         console.error("Error fetching path:", error);
         alert("An error occurred while finding the path.");
