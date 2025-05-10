@@ -335,11 +335,11 @@ const BR1_floorplan = new Map([
 ]);
 
 const BR2_floorplan = new Map([
-    ["stairL1", {x: null, y: null}],
-    ["stairL2", {x: null, y: null}],
-    ["stairR1", {x: null, y: null}],
-    ["stairR2", {x: null, y: null}],
-    ["elevator", {x: null, y: null}],
+    ["stairL1", {x: 22, y: 75}],
+    ["stairL2", {x: 17, y: 5}],
+    ["stairR1", {x: 78, y: 74}],
+    ["stairR2", {x: 83, y: 28}],
+    ["elevator", {x: 13, y: 13}],
     ["Hallway1", {x: null, y: null}],
 
     // Rooms
@@ -414,10 +414,10 @@ const BR2_floorplan = new Map([
     ["intersec15_F2", {x: 94, y: 87}],
 
     // Node in front of door
-    ["stairL1_front", {x: null, y: null}],
-    ["stairL2_front", {x: null, y: null}],
-    ["stairR1_front", {x: null, y: null}],
-    ["stairR2_front", {x: null, y: null}],
+    ["stairL1_front", {x: 22, y: 65}],
+    ["stairL2_front", {x: 17, y: 11}],
+    ["stairR1_front", {x: 77, y: 65}],
+    ["stairR2_front", {x: 83, y: 35}],
     ["elevator_front", {x: 17, y: 12}],
 
     ["BR240_front", {x: 53, y: 65}],
@@ -474,11 +474,11 @@ const BR2_floorplan = new Map([
 ]);
 
 const BR3_floorplan = new Map([
-    ["stairL1", {x: null, y: null}],
-    ["stairL2", {x: null, y: null}],
-    ["stairR1", {x: null, y: null}],
-    ["stairR2", {x: null, y: null}],
-    ["elevator", {x: null, y: null}],
+    ["stairL1", {x: 22, y: 73}],
+    ["stairL2", {x: 16, y: 5}],
+    ["stairR1", {x: 78, y: 74}],
+    ["stairR2", {x: 83, y: 27}],
+    ["elevator", {x: 14, y: 12}],
     ["Hallway1", {x: null, y: null}],
     ["leftHallway1", {x: null, y: null}],
     ["leftHallway2", {x: null, y: null}],
@@ -579,11 +579,11 @@ const BR3_floorplan = new Map([
     ["intersec20_F3", {x: 94, y: 88}],
 
     // Nodes in front of room
-    ["stairL1_front", {x: null, y: null}],
-    ["stairL2_front", {x: null, y: null}],
-    ["stairR1_front", {x: null, y: null}],
-    ["stairR2_front", {x: null, y: null}],
-    ["elevator_front", {x: null, y: null}],
+    ["stairL1_front", {x: 22, y: 66}],
+    ["stairL2_front", {x: 17, y: 11}],
+    ["stairR1_front", {x: 77, y: 67}],
+    ["stairR2_front", {x: 83, y: 35}],
+    ["elevator_front", {x: 17, y: 11}],
 
     ["BR301_front", {x: 16, y: 88}],
     ["BR302_front", {x: null, y: null}],
@@ -656,10 +656,10 @@ const BR3_floorplan = new Map([
 ]);
 
 const BR4_floorplan = new Map([
-    ["stairL1", {x: null, y: null}],
-    ["stairL2", {x: null, y: null}],
-    ["stairR1", {x: null, y: null}],
-    ["elevator", {x: null, y: null}],
+    ["stairL1", {x: 23, y: 74}],
+    ["stairL2", {x: 17, y: 6}],
+    ["stairR1", {x: 76, y: 74}],
+    ["elevator", {x: 14, y: 12}],
 
     // Rooms
     ["BR440", {x: 47, y: 79}],
